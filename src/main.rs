@@ -1,7 +1,6 @@
 use std::io::{self, BufRead};
 
 use clap::{Parser, Subcommand};
-use tiny_http::Response;
 use toy_ufdb::db;
 
 mod snapshot;

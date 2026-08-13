@@ -23,13 +23,46 @@ pub fn render(ufdb: &mut Ufdb) -> String {
     format!("<!DOCTYPE html><html><body>{body}</body></html>")
 }
 
-pub fn render_group(Ufdb: &Ufdb, members: &[String]) -> String {
-    let key = &members[0];
+fn render_group(ufdb: &Ufdb, members: &[String]) -> String {
+    let root = &members[0];
 
+    let mut visited = HashSet::new();
+    visited.insert(root.clone());
 
-    format!("render_group")
+    let tree = render_node(ufdb, root, &mut visited);
+
+    format!(
+        "<details><summary>Group (size {})</summary><ul>{tree}</ul></details>",
+        members.len()
+    )
 }
 
-fn render_node(Ufdb: &Ufdb, key: &str, visited: &mut HashSet<String>) -> String {
-    format!("render_node")
+fn render_node(ufdb: &Ufdb, key: &str, visited: &mut HashSet<String>) -> String {
+    let mut children: Vec<String> = ufdb
+        .neighbors(key)
+        .map(|neighbors| {
+            neighbors
+                .iter()
+                .filter(|n| !visited.contains(*n))
+                .cloned()
+                .collect()
+        })
+        .unwrap_or_default();
+
+    children.sort();
+
+    if children.is_empty() {
+        return format!("<li>{key}</li>");
+    }
+
+    for child in &children {
+        visited.insert(child.clone());
+    }
+
+    let children_html: String = children
+        .iter()
+        .map(|child| render_node(ufdb, child, visited))
+        .collect();
+
+    format!("<li>{key}<ul>{children_html}</ul></li>")
 }
