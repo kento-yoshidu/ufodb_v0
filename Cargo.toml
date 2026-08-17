@@ -6,4 +6,5 @@ edition = "2024"
 [dependencies]
 clap = { version = "4.6.1", features = ["derive"] }
 open = "5.4.0"
+serde = { version = "1.0.229", features = ["derive"] }
 tiny_http = "0.12.0"
