@@ -1,8 +1,9 @@
 // graph
 
 use std::collections::HashMap;
+use serde::{Serialize, Deserialize};
 
-#[derive(Debug)]
+#[derive(Debug, Serialize, Deserialize)]
 pub struct Graph {
     edges: HashMap<String, Vec<String>>,
 }

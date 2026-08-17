@@ -1,10 +1,12 @@
 use std::collections::HashMap;
 
+use serde::{Deserialize, Serialize};
+
 mod union_find;
 mod graph;
 pub mod db;
 
-#[derive(Debug)]
+#[derive(Debug, Serialize, Deserialize)]
 pub struct Ufdb {
     keys: HashMap<String, usize>,
     uf: union_find::UnionFind,
