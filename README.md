@@ -47,6 +47,14 @@ MERGEで2つのキーを連結してグループを作ります。ここでは `
 
 ![](./docs/images/readme/image003.png)
 
+MERGEはキー単位で指定しますが、そのキーがすでに他のキーとMERGE済みでグループを作っている場合は、グループ同士が連結されます。ここでは `c`（`a`-`c`グループ）と `d`（`b`-`d`グループ）をMERGEし、`a`・`b`・`c`・`d` の4つのキーが1つのグループにまとまります。
+
+![](./docs/images/readme/image004.png)
+
+MERGEした結果、`a`・`b`・`c`・`d`は同じグループに属することになるため、`a`-`d`や`b`-`c`のように直接MERGEしていない組み合わせでSAMEを実行してもtrueが返ります。一方、別グループに属する`d`-`g`はfalseのままです。
+
+![](./docs/images/readme/image005.png)
+
 ## 使い方
 
 `cargo run`で起動する。
