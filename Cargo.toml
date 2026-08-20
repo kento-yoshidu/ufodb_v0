@@ -1,5 +1,5 @@
 [package]
-name = "toy_ufdb"
+name = "ufodb_v0"
 version = "0.1.0"
 edition = "2024"
 

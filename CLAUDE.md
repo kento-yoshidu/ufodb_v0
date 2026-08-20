@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## プロジェクト概要
 
-`toy_ufdb`: Union-Find（DSU / 素集合データ構造）を核にしたRust製のトイDB。CLI(REPL)経由でキーのみを管理する。
+`ufodb_v0`: Union-Find（DSU / 素集合データ構造）を核にしたRust製のDB。CLI(REPL)経由でキーのみを管理する。
 
 ## バージョニング方針
 

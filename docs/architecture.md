@@ -1,6 +1,6 @@
 # 内部実装
 
-`toy_ufdb` の内部実装。Union-Find自体の一般的な理論は [`union-find.md`](./union-find.md) を参照。
+`ufodb_v0` の内部実装。Union-Find自体の一般的な理論は [`union-find.md`](./union-find.md) を参照。
 
 ## 3層構造
 

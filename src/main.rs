@@ -1,7 +1,7 @@
 use std::io::{self, BufRead};
 
 use clap::{Parser, Subcommand};
-use toy_ufdb::db;
+use ufodb_v0::db;
 
 mod snapshot;
 

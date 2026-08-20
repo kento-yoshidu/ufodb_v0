@@ -1,6 +1,6 @@
 use std::collections::HashSet;
 
-use toy_ufdb::Ufdb;
+use ufodb_v0::Ufdb;
 
 pub fn render(ufdb: &mut Ufdb) -> String {
     let mut groups: Vec<Vec<String>> = ufdb
