@@ -1,21 +1,28 @@
-use std::io;
+use std::{io, path::Path};
 
 use crate::Ufdb;
 
-pub fn save(ufdb: &Ufdb, db_name: &str) -> io::Result<()> {
-    std::fs::create_dir_all("./ufo_data")?;
+pub fn data_dir() -> io::Result<std::path::PathBuf> {
+    let dirs = directories::ProjectDirs::from("", "", "ufodb")
+        .ok_or_else(|| io::Error::new(io::ErrorKind::Other, "ホームディレクトリを特定できませんでした"))?;
+
+    Ok(dirs.data_local_dir().to_path_buf())
+}
+
+pub fn save(ufdb: &Ufdb, db_name: &str, dir: &Path) -> io::Result<()> {
+    std::fs::create_dir_all(dir)?;
 
     let json = serde_json::to_string_pretty(ufdb)?;
 
-    let path = format!("./ufo_data/{db_name}.json");
+    let path = dir.join(format!("{db_name}.json"));
 
     std::fs::write(path, json)?;
 
     Ok(())
 }
 
-pub fn load(db_name: &str) -> io::Result<Option<Ufdb>> {
-    let path = format!("./ufo_data/{db_name}.json");
+pub fn load(db_name: &str, dir: &Path) -> io::Result<Option<Ufdb>> {
+    let path = dir.join(format!("{db_name}.json"));
 
     let json = match std::fs::read_to_string(path) {
         Ok(json) => json,

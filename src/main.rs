@@ -31,7 +31,12 @@ enum Commands {
 }
 
 fn main() {
-    let mut db = db::Db::new();
+    let data_dir = match ufodb_v0::storage::data_dir() {
+        Ok(dir) => dir,
+        Err(e) => panic!("ホームディレクトリを特定できませんでした。: {e}"),
+    };
+
+    let mut db = db::Db::new(&data_dir);
 
     let mut lines = io::stdin().lock().lines();
 
@@ -90,7 +95,7 @@ fn main() {
                         }
                     },
                     Commands::Use { db_name } => {
-                        match db.use_db(&db_name) {
+                        match db.use_db(&db_name, &data_dir) {
                             UseDbResult::Switched => println!("DB {db_name} に切り替えました。"),
                             UseDbResult::NotFound => {
                                 println!("DB {db_name} は存在しません。作成しますか？(y/n)");
@@ -113,13 +118,13 @@ fn main() {
                     Commands::Save => {
                         let db_name = db.current_name().to_string();
 
-                        match ufodb_v0::storage::save(db.current(), &db_name) {
+                        match ufodb_v0::storage::save(db.current(), &db_name, &data_dir) {
                             Ok(()) => println!("保存しました"),
                             Err(e) => eprintln!("保存に失敗しました : {e}"),
                         }
                     }
                     Commands::Load { db_name } => {
-                        println!("{:?}", ufodb_v0::storage::load(&db_name));
+                        println!("{:?}", ufodb_v0::storage::load(&db_name, &data_dir));
                     },
                     Commands::Snapshot => {
                         let server = tiny_http::Server::http("127.0.0.1:0").unwrap();
