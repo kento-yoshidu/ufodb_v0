@@ -5,6 +5,7 @@ use serde::{Deserialize, Serialize};
 mod union_find;
 mod graph;
 pub mod db;
+pub mod storage;
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Ufdb {
