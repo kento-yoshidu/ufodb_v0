@@ -8,11 +8,24 @@ pub struct Db {
     db: HashMap<String, Ufdb>,
 }
 
+#[derive(Debug)]
+pub enum UseDbResult {
+    Switched,
+    NotFound,
+    Corrupted(std::io::Error),
+}
+
 impl Db {
     pub fn new() -> Self {
+        let ufdb = match crate::storage::load("ufdb") {
+            Ok(Some(ufdb)) => ufdb,
+            Ok(None) => Ufdb::new(),
+            Err(e) => panic!("起動時のデータロードに失敗しました: {e}"),
+        };
+
         Self {
             current_db: "ufdb".to_string(),
-            db: HashMap::from([("ufdb".to_string(), Ufdb::new())]),
+            db: HashMap::from([("ufdb".to_string(), ufdb)]),
         }
     }
 
@@ -35,12 +48,22 @@ impl Db {
         }
     }
 
-    pub fn use_db(&mut self, name: &str) -> bool {
+    pub fn use_db(&mut self, name: &str) -> UseDbResult {
+        // メモリー上にデータがあるか
         if self.db.contains_key(name) {
             self.current_db = name.to_string();
-            true
-        } else {
-            false
+
+            return UseDbResult::Switched;
+        }
+
+        match crate::storage::load(name) {
+            Ok(Some(ufdb)) => {
+                self.db.insert(name.to_string(), ufdb);
+                self.current_db = name.to_string();
+                UseDbResult::Switched
+            },
+            Ok(None) => UseDbResult::NotFound,
+            Err(e) => UseDbResult::Corrupted(e),
         }
     }
 }
@@ -51,6 +74,9 @@ mod tests {
 
     #[test]
     fn new_starts_on_default_db() {
+        let temp_dir = tempfile::tempdir().unwrap();
+        std::env::set_current_dir(&temp_dir).unwrap();
+
         let mut db = Db::new();
 
         assert_eq!(db.current_db, "ufdb");
@@ -83,7 +109,7 @@ mod tests {
         db.create_db("foo");
         db.use_db("ufdb");
 
-        assert!(db.use_db("foo"));
+        assert!(matches!(db.use_db("foo"), UseDbResult::Switched));
         assert_eq!(db.current_db, "foo");
     }
 
@@ -91,7 +117,7 @@ mod tests {
     fn use_db_missing_returns_false_without_switching() {
         let mut db = Db::new();
 
-        assert!(!db.use_db("nope"));
+        assert!(matches!(db.use_db("nope"), UseDbResult::NotFound));
         assert_eq!(db.current_db, "ufdb");
     }
 

@@ -1,7 +1,7 @@
 use std::io::{self, BufRead};
 
 use clap::{Parser, Subcommand};
-use ufodb_v0::db;
+use ufodb_v0::db::{self, UseDbResult};
 
 mod snapshot;
 
@@ -90,18 +90,23 @@ fn main() {
                         }
                     },
                     Commands::Use { db_name } => {
-                        if db.use_db(&db_name) {
-                            println!("DB {db_name} に切り替えました。");
-                        } else {
-                            println!("DB {db_name} は存在しません。作成しますか？(y/n)");
+                        match db.use_db(&db_name) {
+                            UseDbResult::Switched => println!("DB {db_name} に切り替えました。"),
+                            UseDbResult::NotFound => {
+                                println!("DB {db_name} は存在しません。作成しますか？(y/n)");
 
-                            let ans = lines.next().unwrap().unwrap();
+                                let ans = lines.next().unwrap().unwrap();
 
-                            if ans.trim() == "y" {
-                                db.create_db(&db_name);
-                            }
+                                if ans.trim() == "y" {
+                                    db.create_db(&db_name);
+                                    println!("DB {db_name} に切り替えました。");
+                                }
+                            },
+                            UseDbResult::Corrupted(e) => {
+                                eprintln!("{:?}", e);
+                            },
                         }
-                    }
+                    },
                     Commands::Unmerge { key_a, key_b } => {
                         db.current().unmerge(&key_a, &key_b);
                     },
