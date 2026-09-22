@@ -5,7 +5,10 @@ use ufodb_v0::db::Db;
 
 #[test]
 fn merge_same_size_groups_end_to_end() {
-    let mut db = Db::new();
+    let temp_dir = tempfile::tempdir().unwrap();
+    std::env::set_current_dir(&temp_dir).unwrap();
+
+    let mut db = Db::new(temp_dir.path());
     let ufdb = db.current();
 
     ufdb.make_set("apple");
@@ -23,7 +26,10 @@ fn merge_same_size_groups_end_to_end() {
 
 #[test]
 fn unmerge_rebuilds_connectivity_from_remaining_edges() {
-    let mut db = Db::new();
+    let temp_dir = tempfile::tempdir().unwrap();
+    std::env::set_current_dir(&temp_dir).unwrap();
+
+    let mut db = Db::new(temp_dir.path());
     let ufdb = db.current();
 
     ufdb.unite("a", "b");
@@ -40,7 +46,10 @@ fn unmerge_rebuilds_connectivity_from_remaining_edges() {
 
 #[test]
 fn databases_do_not_leak_across_use() {
-    let mut db = Db::new();
+    let temp_dir = tempfile::tempdir().unwrap();
+    std::env::set_current_dir(&temp_dir).unwrap();
+
+    let mut db = Db::new(temp_dir.path());
 
     db.current().unite("a", "b");
 
@@ -48,7 +57,7 @@ fn databases_do_not_leak_across_use() {
     db.current().unite("x", "y");
     assert_eq!(db.current().size("a"), None);
 
-    db.use_db("ufdb");
+    db.use_db("ufdb", temp_dir.path());
     assert!(db.current().same("a", "b"));
     assert_eq!(db.current().size("x"), None);
 }
