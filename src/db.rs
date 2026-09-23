@@ -4,67 +4,40 @@ use crate::Ufdb;
 
 #[derive(Debug)]
 pub struct Db {
-    current_db: String,
     db: HashMap<String, Ufdb>,
 }
 
 #[derive(Debug)]
-pub enum UseDbResult {
-    Switched,
+pub enum LoadError {
     NotFound,
     Corrupted(std::io::Error),
 }
 
 impl Db {
-    pub fn new(dir: &Path) -> Self {
-        let ufdb = match crate::storage::load("ufdb", dir) {
+    pub fn new(db_name: &str, dir: &Path) -> Result<Self, LoadError> {
+        let ufdb = match crate::storage::load(db_name, dir) {
             Ok(Some(ufdb)) => ufdb,
-            Ok(None) => Ufdb::new(),
-            Err(e) => panic!("起動時のデータロードに失敗しました: {e}"),
+            Ok(None) if db_name == "ufdb" => Ufdb::new(),
+            Ok(None) => return Err(LoadError::NotFound),
+            Err(e) => return Err(LoadError::Corrupted(e)),
         };
 
-        Self {
-            current_db: "ufdb".to_string(),
-            db: HashMap::from([("ufdb".to_string(), ufdb)]),
-        }
-    }
-
-    pub fn current(&mut self) -> &mut Ufdb {
-        self.db.get_mut(&self.current_db).unwrap()
-    }
-
-    pub fn current_name(&self) -> &str {
-        &self.current_db
+        Ok(Self {
+            db: HashMap::from([(db_name.to_string(), ufdb)]),
+        })
     }
 
     pub fn create_db(&mut self, name: &str) -> bool {
         if !self.db.contains_key(name) {
             self.db.insert(name.to_string(), Ufdb::new());
-            self.current_db = name.to_string();
             true
         } else {
-            self.current_db = name.to_string();
             false
         }
     }
 
-    pub fn use_db(&mut self, name: &str, dir: &Path) -> UseDbResult {
-        // メモリー上にデータがあるか
-        if self.db.contains_key(name) {
-            self.current_db = name.to_string();
-
-            return UseDbResult::Switched;
-        }
-
-        match crate::storage::load(name, &dir) {
-            Ok(Some(ufdb)) => {
-                self.db.insert(name.to_string(), ufdb);
-                self.current_db = name.to_string();
-                UseDbResult::Switched
-            },
-            Ok(None) => UseDbResult::NotFound,
-            Err(e) => UseDbResult::Corrupted(e),
-        }
+    pub fn get_mut(&mut self, name: &str) -> Option<&mut Ufdb> {
+        self.db.get_mut(name)
     }
 }
 
@@ -73,80 +46,53 @@ mod tests {
     use super::*;
 
     #[test]
-    fn new_starts_on_default_db() {
+    fn new_creates_default_db_when_missing() {
         let temp_dir = tempfile::tempdir().unwrap();
-        std::env::set_current_dir(&temp_dir).unwrap();
 
-        let mut db = Db::new(temp_dir.path());
+        let mut db = Db::new("ufdb", temp_dir.path()).unwrap();
 
-        assert_eq!(db.current_db, "ufdb");
-        assert!(db.current().is_empty());
+        assert!(db.get_mut("ufdb").unwrap().is_empty());
     }
 
     #[test]
-    fn create_db_new_returns_true_and_switches() {
+    fn new_rejects_missing_non_default_db() {
         let temp_dir = tempfile::tempdir().unwrap();
-        std::env::set_current_dir(&temp_dir).unwrap();
 
-        let mut db = Db::new(temp_dir.path());
+        let result = Db::new("foo", temp_dir.path());
+
+        assert!(matches!(result, Err(LoadError::NotFound)));
+    }
+
+    #[test]
+    fn create_db_new_returns_true() {
+        let temp_dir = tempfile::tempdir().unwrap();
+        let mut db = Db::new("ufdb", temp_dir.path()).unwrap();
 
         assert!(db.create_db("foo"));
-        assert_eq!(db.current_db, "foo");
+        assert!(db.get_mut("foo").unwrap().is_empty());
     }
 
     #[test]
-    fn create_db_existing_returns_false_but_still_switches() {
+    fn create_db_existing_returns_false() {
         let temp_dir = tempfile::tempdir().unwrap();
-        std::env::set_current_dir(&temp_dir).unwrap();
-
-        let mut db = Db::new(temp_dir.path());
+        let mut db = Db::new("ufdb", temp_dir.path()).unwrap();
 
         db.create_db("foo");
-        db.use_db("ufdb", temp_dir.path());
 
         assert!(!db.create_db("foo"));
-        assert_eq!(db.current_db, "foo");
-    }
-
-    #[test]
-    fn use_db_existing_switches_and_returns_true() {
-        let temp_dir = tempfile::tempdir().unwrap();
-        std::env::set_current_dir(&temp_dir).unwrap();
-
-        let mut db = Db::new(temp_dir.path());
-
-        db.create_db("foo");
-        db.use_db("ufdb", temp_dir.path());
-
-        assert!(matches!(db.use_db("foo", temp_dir.path()), UseDbResult::Switched));
-        assert_eq!(db.current_db, "foo");
-    }
-
-    #[test]
-    fn use_db_missing_returns_false_without_switching() {
-        let temp_dir = tempfile::tempdir().unwrap();
-        std::env::set_current_dir(&temp_dir).unwrap();
-
-        let mut db = Db::new(temp_dir.path());
-
-        assert!(matches!(db.use_db("nope", temp_dir.path()), UseDbResult::NotFound));
-        assert_eq!(db.current_db, "ufdb");
     }
 
     #[test]
     fn databases_are_independent() {
         let temp_dir = tempfile::tempdir().unwrap();
-        std::env::set_current_dir(&temp_dir).unwrap();
+        let mut db = Db::new("ufdb", temp_dir.path()).unwrap();
 
-        let mut db = Db::new(temp_dir.path());
-
-        db.current().make_set("a");
+        db.get_mut("ufdb").unwrap().make_set("a");
 
         db.create_db("other");
-        assert!(db.current().is_empty());
-        assert_eq!(db.current().size("a"), None);
 
-        db.use_db("ufdb", temp_dir.path());
-        assert_eq!(db.current().size("a"), Some(1));
+        assert!(db.get_mut("other").unwrap().is_empty());
+        assert_eq!(db.get_mut("other").unwrap().size("a"), None);
+        assert_eq!(db.get_mut("ufdb").unwrap().size("a"), Some(1));
     }
 }

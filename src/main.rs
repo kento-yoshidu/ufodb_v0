@@ -1,7 +1,7 @@
 use std::io::{self, BufRead};
 
 use clap::{Parser, Subcommand};
-use ufodb_v0::db::{self, UseDbResult};
+use ufodb_v0::db::self;
 
 mod snapshot;
 
@@ -9,6 +9,12 @@ mod snapshot;
 struct Cli {
     #[command(subcommand)]
     command: Commands,
+}
+
+#[derive(Debug, Parser)]
+struct StartupArgs {
+    #[arg(long, default_value = "ufdb")]
+    db: String,
 }
 
 #[derive(Subcommand)]
@@ -21,7 +27,6 @@ enum Commands {
     Size { key: String },
     Groups,
     Createdb { db_name: String },
-    Use { db_name: String },
     Unmerge { key_a: String, key_b: String },
     Save,
     Load { db_name: String },
@@ -31,14 +36,28 @@ enum Commands {
 }
 
 fn main() {
+    let args = StartupArgs::parse();
+
     let data_dir = match ufodb_v0::storage::data_dir() {
         Ok(dir) => dir,
         Err(e) => panic!("ホームディレクトリを特定できませんでした。: {e}"),
     };
 
-    let mut db = db::Db::new(&data_dir);
+    let mut db = match db::Db::new(&args.db, &data_dir) {
+        Ok(db) => db,
+        Err(db::LoadError::NotFound) => {
+            eprintln!("DB {} は存在しません。", args.db);
+            std::process::exit(1);
+        }
+        Err(db::LoadError::Corrupted(e)) => {
+            eprintln!("DBの読み込みに失敗しました: {e}");
+            std::process::exit(1);
+        }
+    };
 
     let mut lines = io::stdin().lock().lines();
+
+    let db_name = args.db;
 
     while let Some(line) = lines.next() {
         let line = line.unwrap();
@@ -55,19 +74,19 @@ fn main() {
                         println!("Hello World");
                     },
                     Commands::Insert { key } => {
-                        let inserted = db.current().make_set(&key);
+                        let inserted = db.get_mut(&db_name).unwrap().make_set(&key);
                         println!("{inserted}");
                     },
                     Commands::Merge { key_a, key_b } => {
-                        let res = db.current().unite(&key_a, &key_b);
+                        let res = db.get_mut(&db_name).unwrap().unite(&key_a, &key_b);
                         println!("{res}");
                     },
                     Commands::Same { key_a, key_b } => {
-                        let res = db.current().same(&key_a, &key_b);
+                        let res = db.get_mut(&db_name).unwrap().same(&key_a, &key_b);
                         println!("{res}");
                     }
                     Commands::Groups => {
-                        let mut groups: Vec<Vec<&String>> = db.current().groups().into_values().collect();
+                        let mut groups: Vec<Vec<&String>> = db.get_mut(&db_name).unwrap().groups().into_values().collect();
 
                         for group in &mut groups {
                             group.sort();
@@ -82,43 +101,26 @@ fn main() {
                         }
                     },
                     Commands::Size { key } => {
-                        match db.current().size(&key) {
+                        match db.get_mut(&db_name).unwrap().size(&key) {
                             Some(size) => println!("{size}"),
                             None => eprintln!("キー {key} は登録されていません"),
                         }
                     },
                     Commands::Createdb { db_name } => {
                         if db.create_db(&db_name) {
-                            println!("DB {db_name} を作成しました。");
+                            match ufodb_v0::storage::save(db.get_mut(&db_name).unwrap(), &db_name, &data_dir) {
+                                Ok(()) => println!("DB {db_name} を作成しました。"),
+                                Err(e) => eprintln!("DBファイルの作成に失敗しました: {e}"),
+                            }
                         } else {
                             println!("DB {db_name} は既に存在します。");
                         }
                     },
-                    Commands::Use { db_name } => {
-                        match db.use_db(&db_name, &data_dir) {
-                            UseDbResult::Switched => println!("DB {db_name} に切り替えました。"),
-                            UseDbResult::NotFound => {
-                                println!("DB {db_name} は存在しません。作成しますか？(y/n)");
-
-                                let ans = lines.next().unwrap().unwrap();
-
-                                if ans.trim() == "y" {
-                                    db.create_db(&db_name);
-                                    println!("DB {db_name} に切り替えました。");
-                                }
-                            },
-                            UseDbResult::Corrupted(e) => {
-                                eprintln!("{:?}", e);
-                            },
-                        }
-                    },
                     Commands::Unmerge { key_a, key_b } => {
-                        db.current().unmerge(&key_a, &key_b);
+                        db.get_mut(&db_name).unwrap().unmerge(&key_a, &key_b);
                     },
                     Commands::Save => {
-                        let db_name = db.current_name().to_string();
-
-                        match ufodb_v0::storage::save(db.current(), &db_name, &data_dir) {
+                        match ufodb_v0::storage::save(db.get_mut(&db_name).unwrap(), &db_name, &data_dir) {
                             Ok(()) => println!("保存しました"),
                             Err(e) => eprintln!("保存に失敗しました : {e}"),
                         }
@@ -136,7 +138,7 @@ fn main() {
 
                         let request = server.recv().unwrap();
 
-                        let html = snapshot::render(db.current());
+                        let html = snapshot::render(db.get_mut(&db_name).unwrap());
                         let response = tiny_http::Response::from_string(html)
                             .with_header(
                                 tiny_http::Header::from_bytes(&b"Content-Type"[..], &b"text/html; charset=UTF-8"[..]).unwrap()
@@ -145,15 +147,15 @@ fn main() {
                         request.respond(response).unwrap()
                     },
                     Commands::SEED => {
-                        if db.current().is_empty() {
-                            db.current().seed();
+                        if db.get_mut(&db_name).unwrap().is_empty() {
+                            db.get_mut(&db_name).unwrap().seed();
                         } else {
                             println!("既存のデータがあります。SEEDを実行しますか？ (y/n)");
 
                             let ans= lines.next().unwrap().unwrap();
 
                             if ans.trim() == "y" {
-                                db.current().seed();
+                                db.get_mut(&db_name).unwrap().seed();
                             }
                         }
                     },
@@ -204,12 +206,9 @@ mod tests {
     }
 
     #[test]
-    fn parses_createdb_and_use_commands() {
+    fn parses_createdb_command() {
         let cli = Cli::try_parse_from(["repl", "CREATEDB", "mydb"]).unwrap();
         assert!(matches!(cli.command, Commands::Createdb { db_name } if db_name == "mydb"));
-
-        let cli = Cli::try_parse_from(["repl", "USE", "mydb"]).unwrap();
-        assert!(matches!(cli.command, Commands::Use { db_name } if db_name == "mydb"));
     }
 
     #[test]
