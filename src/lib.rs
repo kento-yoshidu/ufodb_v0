@@ -4,7 +4,10 @@ use serde::{Deserialize, Serialize};
 
 mod union_find;
 mod graph;
+
+#[cfg(feature = "storage")]
 pub mod db;
+#[cfg(feature = "storage")]
 pub mod storage;
 
 #[derive(Debug, Serialize, Deserialize)]
