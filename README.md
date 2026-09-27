@@ -10,7 +10,7 @@
 
 Union-Findをコアロジックにしたデータベース。
 
-[ロードマップ](docs/ROADMAP.md) ・ [アーキテクチャ](docs/architecture.md) ・ [Union-Find概論](docs/union-find.md) ・ [GUIアプリ (UFO Studio)](https://github.com/kento-yoshidu/toy_ufdb_gui_app)
+[ロードマップ](docs/ROADMAP.md) ・ [アーキテクチャ](docs/architecture.md) ・ [Union-Find概論](docs/union-find.md) ・ [GUIアプリ (UFO Studio)](https://github.com/kento-yoshidu/ufodb_studio)
 
 ## バージョンについて
 
