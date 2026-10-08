@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" font-family="'Yu Gothic UI', 'Meiryo', 'Hiragino Sans', sans-serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#555555"/>
+    </marker>
+  </defs>
+
+  <rect width="1600" height="900" fill="#ffffff"/>
+
+  <!-- ヘッダー: タイトルと、スライド全体の結論を1文で -->
+  <text x="40" y="78" font-size="44" font-weight="700" fill="#1565c0">タイトル</text>
+  <text x="40" y="128" font-size="22" fill="#333333">このスライドで言いたいことを1文で。</text>
+
+  <!-- パネル（3列）。図を大きく見せたいときは左2つを x=40 width=1040 の1枚にまとめる -->
+  <rect x="40" y="165" width="480" height="680" rx="10" fill="#fafafa" stroke="#e0e0e0"/>
+  <rect x="540" y="165" width="540" height="680" rx="10" fill="#fafafa" stroke="#e0e0e0"/>
+  <rect x="1100" y="165" width="460" height="680" rx="10" fill="#fafafa" stroke="#e0e0e0"/>
+
+  <!-- パネル見出し -->
+  <text x="65" y="212" font-size="24" font-weight="700" fill="#222222">① 見出し</text>
+  <text x="565" y="212" font-size="24" font-weight="700" fill="#222222">② 見出し</text>
+  <text x="1125" y="212" font-size="24" font-weight="700" fill="#222222">③ 見出し</text>
+
+  <!-- 部品: 主役の箱（青）。名前22px太字 + 説明16px -->
+  <g text-anchor="middle">
+    <rect x="65" y="240" width="310" height="88" rx="6" fill="#e3f2fd" stroke="#1565c0" stroke-width="2"/>
+    <text x="220" y="277" font-size="22" font-weight="700" fill="#0d47a1">名前</text>
+    <text x="220" y="307" font-size="16" fill="#333333">「この層が話す言葉」</text>
+  </g>
+
+  <!-- 部品: 外側・下の層の箱（グレー） -->
+  <g text-anchor="middle">
+    <rect x="65" y="350" width="310" height="88" rx="6" fill="#eeeeee" stroke="#757575" stroke-width="2"/>
+    <text x="220" y="387" font-size="22" font-weight="700" fill="#424242">名前</text>
+    <text x="220" y="417" font-size="16" fill="#333333">説明</text>
+  </g>
+
+  <!-- 部品: 矢印 -->
+  <line x1="220" y1="330" x2="220" y2="344" stroke="#555555" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- 部品: 箇条書き（20px、行送り40px） -->
+  <g font-size="20" fill="#222222">
+    <text x="565" y="660">・箇条書き</text>
+    <text x="565" y="700">・箇条書き</text>
+  </g>
+
+  <!-- 部品: 注目させたい箱（オレンジ）と結論の行 -->
+  <rect x="1120" y="240" width="420" height="165" rx="6" fill="#fff3e0" stroke="#ef6c00" stroke-width="2"/>
+  <text x="1140" y="276" font-size="20" font-weight="700" fill="#e65100">小見出し</text>
+  <text x="1140" y="314" font-size="18" fill="#222222">本文</text>
+  <text x="1140" y="382" font-size="19" font-weight="700" fill="#1565c0">→ 結論</text>
+
+  <!-- パネル下の補足（17px グレー） -->
+  <text x="65" y="810" font-size="17" fill="#555555">補足</text>
+
+  <text x="1560" y="880" font-size="15" text-anchor="end" fill="#9e9e9e">ufodb_v0 設計資料</text>
+</svg>
