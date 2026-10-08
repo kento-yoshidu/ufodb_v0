@@ -1,0 +1,140 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" font-family="'Yu Gothic UI', 'Meiryo', 'Hiragino Sans', sans-serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#555555"/>
+    </marker>
+  </defs>
+
+  <rect width="1600" height="900" fill="#ffffff"/>
+
+  <!-- ヘッダー -->
+  <text x="40" y="78" font-size="44" font-weight="700" fill="#1565c0">ページとブロックは別の物差し</text>
+  <text x="40" y="128" font-size="22" fill="#333333">ページはDBの単位、ブロックはOSの単位。同じファイルを、2つの層がそれぞれ固定サイズで区切っている。</text>
+
+  <!-- パネル -->
+  <rect x="40" y="165" width="1040" height="680" rx="10" fill="#fafafa" stroke="#e0e0e0"/>
+  <rect x="1100" y="165" width="460" height="680" rx="10" fill="#fafafa" stroke="#e0e0e0"/>
+
+  <!-- ① 24KBのファイルの例 -->
+  <text x="65" y="212" font-size="24" font-weight="700" fill="#222222">① 24KBのファイルを、それぞれの層が区切る</text>
+
+  <!-- 行ラベル -->
+  <text x="65" y="286" font-size="22" font-weight="700" fill="#0d47a1">DBの見方</text>
+  <text x="65" y="314" font-size="16" fill="#555555">ページ（8KB）× 3</text>
+  <text x="65" y="436" font-size="22" font-weight="700" fill="#424242">OSの見方</text>
+  <text x="65" y="464" font-size="16" fill="#555555">ブロック（4KB）× 6</text>
+  <text x="65" y="606" font-size="22" font-weight="700" fill="#424242">ディスク上</text>
+  <text x="65" y="634" font-size="16" fill="#555555">OSが決めた場所</text>
+
+  <!-- ページとブロックの境目をそろえる補助線 -->
+  <g stroke="#bdbdbd" stroke-width="1.5" stroke-dasharray="5 5">
+    <line x1="260" y1="330" x2="260" y2="400"/>
+    <line x1="500" y1="330" x2="500" y2="400"/>
+    <line x1="740" y1="330" x2="740" y2="400"/>
+    <line x1="980" y1="330" x2="980" y2="400"/>
+  </g>
+
+  <!-- DBの見方 -->
+  <g text-anchor="middle" font-size="20" font-weight="700" stroke-width="2">
+    <rect x="260" y="250" width="240" height="80" fill="#bbdefb" stroke="#1565c0"/>
+    <rect x="500" y="250" width="240" height="80" fill="#bbdefb" stroke="#1565c0"/>
+    <rect x="740" y="250" width="240" height="80" fill="#ffe0b2" stroke="#ef6c00"/>
+    <text x="380" y="297" fill="#0d47a1">ページ0</text>
+    <text x="620" y="297" fill="#0d47a1">ページ1</text>
+    <text x="860" y="297" fill="#e65100">ページ2</text>
+  </g>
+
+  <!-- OSの見方 -->
+  <g text-anchor="middle" font-size="19" stroke-width="2">
+    <rect x="260" y="400" width="120" height="80" fill="#e3f2fd" stroke="#1565c0"/>
+    <rect x="380" y="400" width="120" height="80" fill="#e3f2fd" stroke="#1565c0"/>
+    <rect x="500" y="400" width="120" height="80" fill="#e3f2fd" stroke="#1565c0"/>
+    <rect x="620" y="400" width="120" height="80" fill="#e3f2fd" stroke="#1565c0"/>
+    <rect x="740" y="400" width="120" height="80" fill="#fff3e0" stroke="#ef6c00"/>
+    <rect x="860" y="400" width="120" height="80" fill="#fff3e0" stroke="#ef6c00"/>
+    <text x="320" y="447" fill="#0d47a1">b0</text>
+    <text x="440" y="447" fill="#0d47a1">b1</text>
+    <text x="560" y="447" fill="#0d47a1">b2</text>
+    <text x="680" y="447" fill="#0d47a1">b3</text>
+    <text x="800" y="447" fill="#e65100">b4</text>
+    <text x="920" y="447" fill="#e65100">b5</text>
+  </g>
+
+  <!-- OSが配置を決める -->
+  <g stroke="#555555" stroke-width="2" marker-end="url(#arrow)">
+    <line x1="320" y1="482" x2="296" y2="563"/>
+    <line x1="440" y1="482" x2="366" y2="563"/>
+    <line x1="560" y1="482" x2="436" y2="563"/>
+    <line x1="680" y1="482" x2="506" y2="563"/>
+    <line x1="800" y1="482" x2="854" y2="563"/>
+    <line x1="920" y1="482" x2="924" y2="563"/>
+  </g>
+
+  <!-- ディスク上 -->
+  <g text-anchor="middle" font-size="19" stroke-width="1.5">
+    <rect x="260" y="570" width="70" height="80" fill="#e3f2fd" stroke="#1565c0"/>
+    <rect x="330" y="570" width="70" height="80" fill="#e3f2fd" stroke="#1565c0"/>
+    <rect x="400" y="570" width="70" height="80" fill="#e3f2fd" stroke="#1565c0"/>
+    <rect x="470" y="570" width="70" height="80" fill="#e3f2fd" stroke="#1565c0"/>
+    <rect x="540" y="570" width="70" height="80" fill="#ffffff" stroke="#9e9e9e"/>
+    <rect x="750" y="570" width="70" height="80" fill="#ffffff" stroke="#9e9e9e"/>
+    <rect x="820" y="570" width="70" height="80" fill="#fff3e0" stroke="#ef6c00"/>
+    <rect x="890" y="570" width="70" height="80" fill="#fff3e0" stroke="#ef6c00"/>
+    <rect x="960" y="570" width="70" height="80" fill="#ffffff" stroke="#9e9e9e"/>
+    <text x="295" y="617" fill="#0d47a1">b0</text>
+    <text x="365" y="617" fill="#0d47a1">b1</text>
+    <text x="435" y="617" fill="#0d47a1">b2</text>
+    <text x="505" y="617" fill="#0d47a1">b3</text>
+    <text x="855" y="617" fill="#e65100">b4</text>
+    <text x="925" y="617" fill="#e65100">b5</text>
+    <text x="680" y="617" font-size="24" fill="#9e9e9e">…</text>
+    <g font-size="15" fill="#757575">
+      <text x="295" y="672">100</text>
+      <text x="365" y="672">101</text>
+      <text x="435" y="672">102</text>
+      <text x="505" y="672">103</text>
+      <text x="575" y="672">104</text>
+      <text x="785" y="672">499</text>
+      <text x="855" y="672">500</text>
+      <text x="925" y="672">501</text>
+      <text x="995" y="672">502</text>
+    </g>
+  </g>
+
+  <g font-size="19" fill="#222222">
+    <text x="65" y="734">・DBは、ページがディスクのどこに載るかを知らない</text>
+    <text x="65" y="770">・OSは、ページの境目を知らない。ばらばらになる単位はブロック</text>
+    <text x="65" y="806">・ページ2だけ離れた場所に置かれている（断片化）</text>
+  </g>
+
+  <!-- ② ページ管理の仕事 -->
+  <text x="1125" y="212" font-size="24" font-weight="700" fill="#222222">② ページ管理の仕事</text>
+
+  <g font-size="19" font-weight="700" fill="#0d47a1">
+    <text x="1125" y="258">番号と位置の対応</text>
+    <text x="1125" y="322">読み書き</text>
+    <text x="1125" y="386">割り当て</text>
+    <text x="1125" y="450">ページ内の配置</text>
+    <text x="1125" y="514">キャッシュ</text>
+  </g>
+  <g font-size="17" fill="#333333">
+    <text x="1125" y="285">ページ番号 × 8KB = ファイル内のオフセット</text>
+    <text x="1125" y="349">ページ1枚をまるごと読む、まるごと書く</text>
+    <text x="1125" y="413">新しいページを足す。空きを再利用する</text>
+    <text x="1125" y="477">1枚の中のどこにレコードを置くか</text>
+    <text x="1125" y="541">読んだページをメモリに置いておく</text>
+  </g>
+
+  <!-- ③ 別の単位だから起きること -->
+  <text x="1125" y="612" font-size="24" font-weight="700" fill="#222222">③ 別の単位だから起きること</text>
+
+  <rect x="1120" y="634" width="420" height="180" rx="6" fill="#fff3e0" stroke="#ef6c00" stroke-width="2"/>
+  <g font-size="18" fill="#222222">
+    <text x="1140" y="672">ページの書き込み中に電源が落ちると、</text>
+    <text x="1140" y="704">前半のブロックだけ新しいページが残る</text>
+  </g>
+  <text x="1140" y="756" font-size="19" font-weight="700" fill="#e65100">→ DBはログ（WAL）などで</text>
+  <text x="1140" y="786" font-size="19" font-weight="700" fill="#e65100">　 書き込みを守る</text>
+
+  <text x="1560" y="880" font-size="15" text-anchor="end" fill="#9e9e9e">ufodb_v0 設計資料</text>
+</svg>

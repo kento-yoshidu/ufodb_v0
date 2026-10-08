@@ -287,4 +287,5 @@ Studio（Tauri）と同じUI・同じGUI操作をブラウザだけで提供す�
   - 分け方は**feature方式**（`cli`/`storage`/将来の`server`などのfeatureに依存をまとめ、binに`required-features`を付ける。Playgroundは`default-features = false`で参照する）を想定。targetで分ける方式（`[target.'cfg(not(target_arch = "wasm32"))'.dependencies]`）でもWASMビルドは通るが、Phase 13以降で増えるサーバー用の依存（非同期ランタイム等）がStudioを含むネイティブの利用者すべてでビルドされてしまうため、feature方式の方が将来の見通しが良い
   - 原則: コアのモジュールには、OSの機能（ファイル、ネットワーク、スレッド、時刻）を使うコードを入れない。それらはfeatureの後ろかbin側に置く（`std::time::Instant::now()`は`wasm32-unknown-unknown`でpanicする点にも注意）
 - [ ] （任意）`sorted_groups() -> Vec<Vec<String>>`のような、グループをソート済み・所有権ありの形で返す公開APIを追加する: 現状はStudio（Tauriの`groups`コマンド）と`main.rs`の`GROUPS`がそれぞれ同じソート処理を書いており、Playgroundのラッパーでも同じ処理が必要になる。また`groups()`は借用（`HashMap<usize, Vec<&String>>`）を返すため、そのままではJSに渡せない
+  - 2026-09-28時点で、Playgroundのラッパー（`wasm/src/lib.rs`）も同じ並べ替えを持つようになった（3か所目）。Playgroundでは、サイズが同じグループの順序も固定するため「サイズの降順 → 同じなら中身の昇順」にしている（Studioはサイズだけで比べており、同サイズのグループは`HashMap`の順序のまま入れ替わりうる）。`sorted_groups()`を作るときはこの条件に揃える
 - 設計判断ポイント: Phase 13で`Db`構造体を作り直す際、`Db`が永続化（`storage`）なしでも生成できる形にしておくと、将来Playgroundで複数DB（`CREATEDB`等）を扱いたくなった場合に流用できる。現状の`Db::new`は`dir: &Path`を受け取ってstorageからロードするため、永続化と結びついている
