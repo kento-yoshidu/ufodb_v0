@@ -1,0 +1,142 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" font-family="'Yu Gothic UI', 'Meiryo', 'Hiragino Sans', sans-serif">
+  <rect width="1600" height="900" fill="#ffffff"/>
+
+  <!-- ヘッダー -->
+  <text x="40" y="78" font-size="44" font-weight="700" fill="#1565c0">ufodbのファイルフォーマット候補</text>
+  <text x="40" y="128" font-size="22" fill="#333333">フォーマットは「変更をどう書くか」と「キーをどう置くか」の組み合わせで決まる。</text>
+
+  <!-- パネル -->
+  <rect x="40" y="165" width="380" height="680" rx="10" fill="#fafafa" stroke="#e0e0e0"/>
+  <rect x="440" y="165" width="1120" height="680" rx="10" fill="#fafafa" stroke="#e0e0e0"/>
+
+  <!-- ① 決める軸 -->
+  <text x="65" y="212" font-size="24" font-weight="700" fill="#222222">① 決める軸</text>
+
+  <rect x="60" y="240" width="340" height="160" rx="6" fill="#e3f2fd" stroke="#1565c0" stroke-width="2"/>
+  <text x="80" y="274" font-size="19" font-weight="700" fill="#0d47a1">変更をどう書くか</text>
+  <g font-size="18" fill="#222222">
+    <text x="80" y="310">・全体を書き直す（いま）</text>
+    <text x="80" y="342">・末尾に足す（追記ログ）</text>
+    <text x="80" y="374">・その場で書き換える（ページ）</text>
+  </g>
+
+  <rect x="60" y="420" width="340" height="125" rx="6" fill="#e3f2fd" stroke="#1565c0" stroke-width="2"/>
+  <text x="80" y="454" font-size="19" font-weight="700" fill="#0d47a1">キーをどう置くか</text>
+  <g font-size="18" fill="#222222">
+    <text x="80" y="490">・可変長 + 位置表</text>
+    <text x="80" y="522">・固定長（幅はDBごと）</text>
+  </g>
+
+  <rect x="60" y="565" width="340" height="160" rx="6" fill="#ffffff" stroke="#9e9e9e" stroke-width="1.5"/>
+  <text x="80" y="599" font-size="19" font-weight="700" fill="#424242">新しい案に共通</text>
+  <g font-size="18" fill="#222222">
+    <text x="80" y="635">・parentは置かない</text>
+    <text x="80" y="667">・整数は4バイト固定</text>
+    <text x="80" y="699">・辺はインデックスで書く</text>
+  </g>
+
+  <g font-size="17" fill="#555555">
+    <text x="65" y="776">ページ方式は、全体がメモリに</text>
+    <text x="65" y="804">載らなくなったら検討する</text>
+  </g>
+
+  <!-- ② 候補 -->
+  <text x="465" y="212" font-size="24" font-weight="700" fill="#222222">② 候補（オレンジ ＝ その案の特徴になる部分）</text>
+
+  <!-- 案1 いまのJSON -->
+  <rect x="460" y="235" width="1080" height="190" rx="6" fill="#ffffff" stroke="#9e9e9e" stroke-width="1.5"/>
+  <text x="480" y="275" font-size="24" font-weight="700" fill="#424242">案1</text>
+  <text x="480" y="307" font-size="20" font-weight="700" fill="#424242">いまのJSON</text>
+  <g font-size="15" fill="#555555">
+    <text x="480" y="345">変更：全体を書き直す</text>
+    <text x="480" y="369">キー：serde_json 任せ</text>
+  </g>
+  <rect x="725" y="305" width="460" height="50" fill="#eeeeee" stroke="#757575" stroke-width="1.5"/>
+  <text x="955" y="336" font-size="15" text-anchor="middle" font-family="Consolas, monospace" fill="#424242">{ "keys": {…}, "uf": {…}, "graph": {…} }</text>
+  <text x="725" y="380" font-size="15" fill="#555555">全体を1つのJSONとして書く</text>
+  <g font-size="17" fill="#222222">
+    <text x="1205" y="285">○ 人が読める</text>
+    <text x="1205" y="317">○ すでに動いている</text>
+    <text x="1205" y="349">△ 1件の変更で全体を書き直す</text>
+    <text x="1205" y="381">△ 同じキー文字列が何度も出る</text>
+  </g>
+
+  <!-- 案2 追記ログ + 可変長キー -->
+  <rect x="460" y="440" width="1080" height="190" rx="6" fill="#ffffff" stroke="#1565c0" stroke-width="2"/>
+  <text x="480" y="480" font-size="24" font-weight="700" fill="#1565c0">案2</text>
+  <text x="480" y="512" font-size="20" font-weight="700" fill="#0d47a1">追記ログ + 可変長キー</text>
+  <g font-size="15" fill="#555555">
+    <text x="480" y="550">変更：末尾に足す</text>
+    <text x="480" y="574">キー：可変長 + 位置表</text>
+  </g>
+  <g font-size="14" text-anchor="middle" fill="#555555">
+    <text x="907" y="502">本体</text>
+    <text x="1137" y="502">追記ログ</text>
+  </g>
+  <g font-size="14" text-anchor="middle" stroke-width="1.5">
+    <rect x="725" y="510" width="70" height="50" fill="#e3f2fd" stroke="#1565c0"/>
+    <rect x="795" y="510" width="90" height="50" fill="#ffe0b2" stroke="#ef6c00" stroke-width="2"/>
+    <rect x="885" y="510" width="115" height="50" fill="#e3f2fd" stroke="#1565c0"/>
+    <rect x="1000" y="510" width="90" height="50" fill="#e3f2fd" stroke="#1565c0"/>
+    <rect x="1090" y="510" width="25" height="50" fill="#ffe0b2" stroke="#ef6c00" stroke-width="2"/>
+    <rect x="1115" y="510" width="40" height="50" fill="#ffe0b2" stroke="#ef6c00" stroke-width="2"/>
+    <rect x="1155" y="510" width="30" height="50" fill="#ffe0b2" stroke="#ef6c00" stroke-width="2"/>
+    <text x="760" y="540" fill="#0d47a1">ヘッダー</text>
+    <text x="840" y="540" font-weight="700" fill="#e65100">位置表</text>
+    <text x="942" y="540" fill="#0d47a1">キー本体</text>
+    <text x="1045" y="540" fill="#0d47a1">辺の一覧</text>
+  </g>
+  <text x="725" y="585" font-size="15" fill="#555555">キーの長さはばらばら。位置表で i 番目の場所を引く</text>
+  <g font-size="17" fill="#222222">
+    <text x="1205" y="490">○ キーの長さに上限がない</text>
+    <text x="1205" y="522">○ 無駄な領域が少ない</text>
+    <text x="1205" y="554">△ 表が2つ（位置表とキー本体）</text>
+    <text x="1205" y="586">△ 追記ログの記録ごとに長さが要る</text>
+  </g>
+
+  <!-- 案3 追記ログ + 固定長キー -->
+  <rect x="460" y="645" width="1080" height="190" rx="6" fill="#ffffff" stroke="#1565c0" stroke-width="2"/>
+  <text x="480" y="685" font-size="24" font-weight="700" fill="#1565c0">案3</text>
+  <text x="480" y="717" font-size="20" font-weight="700" fill="#0d47a1">追記ログ + 固定長キー</text>
+  <g font-size="15" fill="#555555">
+    <text x="480" y="755">変更：末尾に足す</text>
+    <text x="480" y="779">キー：固定長（幅はDBごと）</text>
+  </g>
+  <g font-size="14" text-anchor="middle" fill="#555555">
+    <text x="910" y="707">本体</text>
+    <text x="1140" y="707">追記ログ</text>
+  </g>
+  <g font-size="14" text-anchor="middle" stroke-width="1.5">
+    <rect x="725" y="715" width="70" height="50" fill="#e3f2fd" stroke="#1565c0"/>
+    <text x="760" y="745" fill="#0d47a1">ヘッダー</text>
+
+    <rect x="795" y="715" width="42" height="50" fill="#fff3e0" stroke="#ef6c00" stroke-width="2"/>
+    <rect x="837" y="715" width="42" height="50" fill="#fff3e0" stroke="#ef6c00" stroke-width="2"/>
+    <rect x="879" y="715" width="42" height="50" fill="#fff3e0" stroke="#ef6c00" stroke-width="2"/>
+    <rect x="921" y="715" width="42" height="50" fill="#fff3e0" stroke="#ef6c00" stroke-width="2"/>
+    <rect x="963" y="715" width="42" height="50" fill="#fff3e0" stroke="#ef6c00" stroke-width="2"/>
+    <g stroke="none" fill="#ffb74d">
+      <rect x="796" y="716" width="29" height="48"/>
+      <rect x="838" y="716" width="17" height="48"/>
+      <rect x="880" y="716" width="37" height="48"/>
+      <rect x="922" y="716" width="11" height="48"/>
+      <rect x="964" y="716" width="23" height="48"/>
+    </g>
+
+    <rect x="1005" y="715" width="90" height="50" fill="#e3f2fd" stroke="#1565c0"/>
+    <text x="1050" y="745" fill="#0d47a1">辺の一覧</text>
+
+    <rect x="1095" y="715" width="30" height="50" fill="#ffe0b2" stroke="#ef6c00" stroke-width="2"/>
+    <rect x="1125" y="715" width="30" height="50" fill="#ffe0b2" stroke="#ef6c00" stroke-width="2"/>
+    <rect x="1155" y="715" width="30" height="50" fill="#ffe0b2" stroke="#ef6c00" stroke-width="2"/>
+  </g>
+  <text x="725" y="790" font-size="15" fill="#555555">キーは同じ幅。濃い部分が実際の文字列、残りは余り</text>
+  <g font-size="17" fill="#222222">
+    <text x="1205" y="695">○ 表が1つで単純</text>
+    <text x="1205" y="727">○ 記録がすべて同じ大きさ</text>
+    <text x="1205" y="759">△ キーの長さに上限（バイト数）</text>
+    <text x="1205" y="791">△ 短いキーでは幅が余る</text>
+  </g>
+
+  <text x="1560" y="880" font-size="15" text-anchor="end" fill="#9e9e9e">ufodb_v0 設計資料</text>
+</svg>
