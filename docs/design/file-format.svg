@@ -1,0 +1,154 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" font-family="'Yu Gothic UI', 'Meiryo', 'Hiragino Sans', sans-serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#555555"/>
+    </marker>
+    <marker id="arrow-orange" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#ef6c00"/>
+    </marker>
+  </defs>
+
+  <rect width="1600" height="900" fill="#ffffff"/>
+
+  <!-- ヘッダー -->
+  <text x="40" y="78" font-size="44" font-weight="700" fill="#1565c0">ファイルフォーマット：ファイルの中のバイトの並べ方</text>
+  <text x="40" y="128" font-size="22" fill="#333333">B+木はページを選び、フォーマットはページの中の位置を決める。良くなるのは置かれ方ではなく、読み書きの回数。</text>
+
+  <!-- パネル -->
+  <rect x="40" y="165" width="480" height="680" rx="10" fill="#fafafa" stroke="#e0e0e0"/>
+  <rect x="540" y="165" width="540" height="680" rx="10" fill="#fafafa" stroke="#e0e0e0"/>
+  <rect x="1100" y="165" width="460" height="680" rx="10" fill="#fafafa" stroke="#e0e0e0"/>
+
+  <!-- ① aliceを追加するときの分担 -->
+  <text x="65" y="212" font-size="24" font-weight="700" fill="#222222">① aliceを追加するときの分担</text>
+
+  <g text-anchor="middle">
+    <rect x="65" y="240" width="310" height="100" rx="6" fill="#e3f2fd" stroke="#1565c0" stroke-width="2"/>
+    <text x="220" y="272" font-size="22" font-weight="700" fill="#0d47a1">B+木</text>
+    <text x="220" y="300" font-size="16" fill="#333333">どのページに入れるか</text>
+    <text x="220" y="326" font-size="16" font-weight="700" fill="#0d47a1">→ 7番ページ</text>
+
+    <rect x="65" y="370" width="310" height="100" rx="6" fill="#fff3e0" stroke="#ef6c00" stroke-width="2"/>
+    <text x="220" y="402" font-size="22" font-weight="700" fill="#e65100">ページ内の配置</text>
+    <text x="220" y="430" font-size="16" fill="#333333">ページの中の何バイト目か</text>
+    <text x="220" y="456" font-size="16" font-weight="700" fill="#e65100">→ 空き領域の先頭</text>
+
+    <rect x="65" y="500" width="310" height="100" rx="6" fill="#fff3e0" stroke="#ef6c00" stroke-width="2"/>
+    <text x="220" y="532" font-size="22" font-weight="700" fill="#e65100">ページ管理</text>
+    <text x="220" y="560" font-size="16" fill="#333333">ページがファイルの何バイト目か</text>
+    <text x="220" y="586" font-size="16" font-weight="700" fill="#e65100">→ 7 × 8KB</text>
+  </g>
+
+  <g stroke="#555555" stroke-width="2" marker-end="url(#arrow)">
+    <line x1="220" y1="342" x2="220" y2="363"/>
+    <line x1="220" y1="472" x2="220" y2="493"/>
+  </g>
+
+  <path d="M 388 240 H 398 V 340 H 388" fill="none" stroke="#1565c0" stroke-width="2"/>
+  <text x="410" y="296" font-size="16" font-weight="700" fill="#1565c0">B+木</text>
+  <path d="M 388 370 H 398 V 600 H 388" fill="none" stroke="#ef6c00" stroke-width="2"/>
+  <g font-size="16" font-weight="700" fill="#e65100">
+    <text x="410" y="470">ファイル</text>
+    <text x="410" y="492">フォーマット</text>
+    <text x="410" y="514">（3章）</text>
+  </g>
+
+  <g font-size="19" fill="#222222">
+    <text x="65" y="664">・B+木が知っているのは、キーの順番と</text>
+    <text x="65" y="694">　ページ番号だけ</text>
+    <text x="65" y="738">・バイト単位の位置は、B+木は決めない</text>
+  </g>
+  <text x="65" y="810" font-size="17" fill="#555555">どちらもDBの中。OSより下の話ではない</text>
+
+  <!-- ② フォーマットが決めるもの -->
+  <text x="565" y="212" font-size="24" font-weight="700" fill="#222222">② フォーマットが決めるもの</text>
+
+  <text x="580" y="256" font-size="17" fill="#555555">ファイル全体：固定サイズのページに区切る</text>
+  <g font-size="18" text-anchor="middle" stroke-width="1.5">
+    <rect x="580" y="268" width="46" height="50" fill="#ffffff" stroke="#9e9e9e"/>
+    <rect x="626" y="268" width="46" height="50" fill="#ffffff" stroke="#9e9e9e"/>
+    <rect x="672" y="268" width="46" height="50" fill="#ffffff" stroke="#9e9e9e"/>
+    <rect x="718" y="268" width="46" height="50" fill="#ffffff" stroke="#9e9e9e"/>
+    <rect x="764" y="268" width="46" height="50" fill="#ffffff" stroke="#9e9e9e"/>
+    <rect x="810" y="268" width="46" height="50" fill="#ffffff" stroke="#9e9e9e"/>
+    <rect x="856" y="268" width="46" height="50" fill="#ffffff" stroke="#9e9e9e"/>
+    <rect x="948" y="268" width="46" height="50" fill="#ffffff" stroke="#9e9e9e"/>
+    <rect x="994" y="268" width="46" height="50" fill="#ffffff" stroke="#9e9e9e"/>
+    <rect x="902" y="268" width="46" height="50" fill="#fff3e0" stroke="#ef6c00" stroke-width="2"/>
+    <g fill="#9e9e9e">
+      <text x="603" y="300">0</text>
+      <text x="649" y="300">1</text>
+      <text x="695" y="300">2</text>
+      <text x="741" y="300">3</text>
+      <text x="787" y="300">4</text>
+      <text x="833" y="300">5</text>
+      <text x="879" y="300">6</text>
+      <text x="925" y="300" fill="#e65100" font-weight="700">7</text>
+      <text x="971" y="300">8</text>
+      <text x="1017" y="300">9</text>
+    </g>
+  </g>
+
+  <!-- 7番ページを拡大 -->
+  <g stroke="#ef6c00" stroke-width="1.5" stroke-dasharray="5 5">
+    <line x1="902" y1="318" x2="570" y2="420"/>
+    <line x1="948" y1="318" x2="1050" y2="420"/>
+  </g>
+
+  <g text-anchor="middle" font-size="16" stroke-width="2">
+    <rect x="570" y="420" width="90" height="80" fill="#fff3e0" stroke="#ef6c00"/>
+    <rect x="660" y="420" width="120" height="80" fill="#fff3e0" stroke="#ef6c00"/>
+    <rect x="780" y="420" width="110" height="80" fill="#ffffff" stroke="#ef6c00"/>
+    <rect x="890" y="420" width="80" height="80" fill="#fff3e0" stroke="#ef6c00"/>
+    <rect x="970" y="420" width="80" height="80" fill="#ffe0b2" stroke="#ef6c00"/>
+    <text x="615" y="466" fill="#333333">ヘッダー</text>
+    <text x="720" y="456" fill="#333333">レコードの</text>
+    <text x="720" y="478" fill="#333333">位置の一覧</text>
+    <text x="835" y="466" fill="#9e9e9e">空き領域</text>
+    <text x="930" y="466" fill="#333333">bob</text>
+    <text x="1010" y="466" font-weight="700" fill="#e65100">alice</text>
+  </g>
+
+  <g fill="none" stroke="#ef6c00" stroke-width="2" marker-end="url(#arrow-orange)">
+    <path d="M 705 502 C 705 545, 930 545, 930 508"/>
+    <path d="M 735 502 C 735 575, 1010 575, 1010 508"/>
+  </g>
+
+  <text x="810" y="604" font-size="17" text-anchor="middle" fill="#555555">ページ1枚の中：一覧から各レコードの場所を引ける</text>
+
+  <text x="580" y="666" font-size="20" font-weight="700" fill="#222222">3つの大きさで決める</text>
+  <g font-size="19" fill="#222222">
+    <text x="580" y="706">・値1つ：整数や文字列をどうバイトにするか</text>
+    <text x="580" y="742">・ファイル全体：ページにどう区切るか</text>
+    <text x="580" y="778">・ページ1枚：レコードをどう詰めるか</text>
+  </g>
+  <text x="580" y="818" font-size="17" fill="#555555">フォーマットは入れ物の形。B+木は入れ方の規則</text>
+
+  <!-- ③ 減らせるのは読み書きの回数 -->
+  <text x="1125" y="212" font-size="24" font-weight="700" fill="#222222">③ 減らせるのは読み書きの回数</text>
+
+  <rect x="1120" y="240" width="420" height="190" rx="6" fill="#e3f2fd" stroke="#1565c0" stroke-width="2"/>
+  <text x="1140" y="278" font-size="20" font-weight="700" fill="#0d47a1">ページに区切ったフォーマット</text>
+  <g font-size="19" fill="#222222">
+    <text x="1140" y="322">・N番ページだけを読める</text>
+    <text x="1140" y="360">・1件探すのに読むのは数枚</text>
+    <text x="1140" y="398">・1件変えたら、書くのは1枚だけ</text>
+  </g>
+
+  <rect x="1120" y="455" width="420" height="190" rx="6" fill="#ffffff" stroke="#9e9e9e" stroke-width="1.5"/>
+  <text x="1140" y="493" font-size="20" font-weight="700" fill="#424242">いまのufodb（JSON）</text>
+  <g font-size="19" fill="#222222">
+    <text x="1140" y="537">・バイトの並びは serde_json 任せ</text>
+    <text x="1140" y="575">・位置を知るには、先頭から全部読む</text>
+    <text x="1140" y="613">・1件変えたら、全体を書き直す</text>
+  </g>
+
+  <g font-size="19" font-weight="700" fill="#1565c0">
+    <text x="1120" y="700">ディスク上の置かれ方は、OSが決める</text>
+    <text x="1120" y="734">→ DBが設計で変えられるのは、</text>
+    <text x="1120" y="764">　 何ページ読んで何ページ書くか</text>
+  </g>
+  <text x="1120" y="814" font-size="17" fill="#555555">回数が減れば、HDDでもSSDでも速くなる</text>
+
+  <text x="1560" y="880" font-size="15" text-anchor="end" fill="#9e9e9e">ufodb_v0 設計資料</text>
+</svg>

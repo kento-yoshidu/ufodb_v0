@@ -1,0 +1,151 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" font-family="'Yu Gothic UI', 'Meiryo', 'Hiragino Sans', sans-serif">
+  <defs>
+    <marker id="arrow-blue" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#1565c0"/>
+    </marker>
+  </defs>
+
+  <rect width="1600" height="900" fill="#ffffff"/>
+
+  <!-- ヘッダー -->
+  <text x="40" y="78" font-size="44" font-weight="700" fill="#1565c0">ufodbで最悪のフォーマット</text>
+  <text x="40" y="128" font-size="22" fill="#333333">3つの問いに逆の答えを出すと、調べるだけの操作が、ディスクの離れた場所への読み書きに変わる。</text>
+
+  <!-- パネル -->
+  <rect x="40" y="165" width="480" height="680" rx="10" fill="#fafafa" stroke="#e0e0e0"/>
+  <rect x="540" y="165" width="540" height="680" rx="10" fill="#fafafa" stroke="#e0e0e0"/>
+  <rect x="1100" y="165" width="460" height="680" rx="10" fill="#fafafa" stroke="#e0e0e0"/>
+
+  <!-- ① 最悪のフォーマット -->
+  <text x="65" y="212" font-size="24" font-weight="700" fill="#222222">① 3つの問いに逆の答えを出す</text>
+
+  <g font-size="19" font-weight="700" fill="#c62828">
+    <text x="65" y="282">✕ 問1：メモリに載るのに、毎回ファイルを読む</text>
+    <text x="65" y="412">✕ 問2：parentを元のデータとして置く</text>
+    <text x="65" y="542">✕ 問3：足すだけなのに、その場で書き換える</text>
+  </g>
+  <g font-size="16" fill="#2e7d32">
+    <text x="92" y="316">良い案：起動時に全部読む</text>
+    <text x="92" y="446">良い案：キーと辺だけを置く</text>
+    <text x="92" y="576">良い案：変更は末尾に足す</text>
+  </g>
+
+  <text x="65" y="680" font-size="17" fill="#555555">ファイルを、メモリの代わりに使う形になる</text>
+  <text x="65" y="790" font-size="16" fill="#757575">fsyncの頻度はフォーマットとは別の判断なので、</text>
+  <text x="65" y="814" font-size="16" fill="#757575">ここには入れていない</text>
+
+  <!-- ② SAME alice bob で起きること -->
+  <text x="565" y="212" font-size="24" font-weight="700" fill="#222222">② SAME alice bob で起きること</text>
+
+  <!-- 読みに行く順の矢印（上） -->
+  <g fill="none" stroke="#1565c0" stroke-width="2" marker-end="url(#arrow-blue)">
+    <path d="M 961 298 C 961 238, 689 238, 689 292"/>
+    <path d="M 689 298 C 689 262, 859 262, 859 292"/>
+    <path d="M 859 298 C 859 250, 621 250, 621 292"/>
+  </g>
+
+  <!-- ファイル上の parent -->
+  <g stroke-width="1.5">
+    <rect x="570" y="300" width="34" height="50" fill="#ffffff" stroke="#bdbdbd"/>
+    <rect x="604" y="300" width="34" height="50" fill="#1565c0" stroke="#0d47a1" stroke-width="2"/>
+    <rect x="638" y="300" width="34" height="50" fill="#ffffff" stroke="#bdbdbd"/>
+    <rect x="672" y="300" width="34" height="50" fill="#ffe0b2" stroke="#ef6c00" stroke-width="2"/>
+    <rect x="706" y="300" width="34" height="50" fill="#ffffff" stroke="#bdbdbd"/>
+    <rect x="740" y="300" width="34" height="50" fill="#ffffff" stroke="#bdbdbd"/>
+    <rect x="774" y="300" width="34" height="50" fill="#ffffff" stroke="#bdbdbd"/>
+    <rect x="808" y="300" width="34" height="50" fill="#ffffff" stroke="#bdbdbd"/>
+    <rect x="842" y="300" width="34" height="50" fill="#ffe0b2" stroke="#ef6c00" stroke-width="2"/>
+    <rect x="876" y="300" width="34" height="50" fill="#ffffff" stroke="#bdbdbd"/>
+    <rect x="910" y="300" width="34" height="50" fill="#ffffff" stroke="#bdbdbd"/>
+    <rect x="944" y="300" width="34" height="50" fill="#ffe0b2" stroke="#ef6c00" stroke-width="2"/>
+    <rect x="978" y="300" width="34" height="50" fill="#ffffff" stroke="#bdbdbd"/>
+    <rect x="1012" y="300" width="34" height="50" fill="#ffffff" stroke="#bdbdbd"/>
+  </g>
+  <g font-size="14" text-anchor="middle">
+    <text x="621" y="331" fill="#ffffff" font-weight="700">根</text>
+    <text x="961" y="331" fill="#e65100" font-weight="700">alice</text>
+  </g>
+
+  <text x="570" y="378" font-size="16" fill="#555555">ファイル上のparent。辿るたびに離れた場所へ飛ぶ</text>
+  <g font-size="15" fill="#555555">
+    <line x1="570" y1="403" x2="600" y2="403" stroke="#1565c0" stroke-width="2"/>
+    <text x="608" y="408">読む順</text>
+    <rect x="672" y="395" width="16" height="16" fill="#ffe0b2" stroke="#ef6c00" stroke-width="2"/>
+    <text x="696" y="408">経路圧縮で書き戻す場所</text>
+  </g>
+
+  <g font-size="18" fill="#222222">
+    <text x="570" y="460">1. 根まで辿る：離れた場所を最大34回読む</text>
+    <text x="570" y="494">2. 経路圧縮：離れた場所に約30回書く</text>
+  </g>
+
+  <!-- 時間の比較 -->
+  <g stroke="#bdbdbd" stroke-width="1.5">
+    <rect x="565" y="530" width="130" height="40" fill="#eeeeee"/>
+    <rect x="695" y="530" width="120" height="40" fill="#eeeeee"/>
+    <rect x="815" y="530" width="120" height="40" fill="#eeeeee"/>
+    <rect x="935" y="530" width="120" height="40" fill="#eeeeee"/>
+
+    <rect x="565" y="570" width="130" height="60" fill="#ffffff"/>
+    <rect x="695" y="570" width="120" height="60" fill="#e8f5e9"/>
+    <rect x="815" y="570" width="120" height="60" fill="#ffebee"/>
+    <rect x="935" y="570" width="120" height="60" fill="#ffebee"/>
+
+    <rect x="565" y="630" width="130" height="60" fill="#ffffff"/>
+    <rect x="695" y="630" width="120" height="60" fill="#e8f5e9"/>
+    <rect x="815" y="630" width="120" height="60" fill="#ffebee"/>
+    <rect x="935" y="630" width="120" height="60" fill="#ffebee"/>
+  </g>
+  <g text-anchor="middle">
+    <text x="755" y="556" font-size="16" font-weight="700" fill="#424242">いま（メモリ）</text>
+    <text x="875" y="556" font-size="16" font-weight="700" fill="#424242">最悪・HDD</text>
+    <text x="995" y="556" font-size="16" font-weight="700" fill="#424242">最悪・SSD</text>
+
+    <text x="630" y="606" font-size="16" font-weight="700" fill="#222222">SAME 1回</text>
+    <text x="755" y="607" font-size="19" font-weight="700" fill="#2e7d32">数μs</text>
+    <text x="875" y="607" font-size="19" font-weight="700" fill="#c62828">約0.7秒</text>
+    <text x="995" y="607" font-size="19" font-weight="700" fill="#c62828">約10ms</text>
+
+    <text x="630" y="658" font-size="16" font-weight="700" fill="#222222">ディスクへ</text>
+    <text x="630" y="678" font-size="16" font-weight="700" fill="#222222">の書き込み</text>
+    <text x="755" y="667" font-size="18" fill="#2e7d32">なし</text>
+    <text x="875" y="667" font-size="18" fill="#c62828">約30回</text>
+    <text x="995" y="667" font-size="18" fill="#c62828">約30回</text>
+  </g>
+
+  <g font-size="15" fill="#555555">
+    <text x="565" y="728">時間は目安。前提は次の2つ</text>
+    <text x="565" y="754">・ファイルがOSのキャッシュに載っていない</text>
+    <text x="565" y="780">・10万キーで木が最も深い（17段）</text>
+    <text x="565" y="812">一度辿ると浅くなるので、2回目以降は数回の読み書きで済む</text>
+  </g>
+
+  <!-- ③ ufodbへの影響 -->
+  <text x="1125" y="212" font-size="24" font-weight="700" fill="#222222">③ ufodbへの影響</text>
+
+  <g font-size="19" font-weight="700" fill="#c62828">
+    <text x="1125" y="266">調べるだけで書き込みが起きる</text>
+    <text x="1125" y="386">HDDでは1秒に数回しか答えられない</text>
+    <text x="1125" y="506">SSDの寿命が縮む</text>
+    <text x="1125" y="626">途中で落ちると食い違う</text>
+  </g>
+  <g font-size="17" fill="#333333">
+    <text x="1125" y="298">SAMEでも経路圧縮の分を書く</text>
+    <text x="1125" y="418">SAME 1回に約0.7秒かかる</text>
+    <text x="1125" y="538">4バイトの変更のたびに4KBを書く</text>
+    <text x="1125" y="658">parent・size・辺の一覧を別々に書く</text>
+  </g>
+  <g font-size="15" fill="#757575">
+    <text x="1125" y="326">原因：問2・問3</text>
+    <text x="1125" y="446">原因：問1</text>
+    <text x="1125" y="566">原因：問3</text>
+    <text x="1125" y="686">原因：問2</text>
+  </g>
+
+  <g font-size="18" font-weight="700" fill="#1565c0">
+    <text x="1120" y="764">逆にすると良い案になる：</text>
+    <text x="1120" y="794">parentはメモリだけ、ファイルには足すだけ</text>
+  </g>
+
+  <text x="1560" y="880" font-size="15" text-anchor="end" fill="#9e9e9e">ufodb_v0 設計資料</text>
+</svg>

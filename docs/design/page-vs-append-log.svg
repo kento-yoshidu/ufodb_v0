@@ -1,0 +1,116 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" font-family="'Yu Gothic UI', 'Meiryo', 'Hiragino Sans', sans-serif">
+  <rect width="1600" height="900" fill="#ffffff"/>
+
+  <!-- ヘッダー -->
+  <text x="40" y="78" font-size="44" font-weight="700" fill="#1565c0">ページ方式と追記ログ方式</text>
+  <text x="40" y="128" font-size="22" fill="#333333">ページ方式は変更をその場で書き換え、追記ログ方式は末尾に足す。足すだけの操作が中心のufodbには、追記ログ方式が合う。</text>
+
+  <!-- パネル -->
+  <rect x="40" y="165" width="480" height="680" rx="10" fill="#fafafa" stroke="#e0e0e0"/>
+  <rect x="540" y="165" width="540" height="680" rx="10" fill="#fafafa" stroke="#e0e0e0"/>
+  <rect x="1100" y="165" width="460" height="680" rx="10" fill="#fafafa" stroke="#e0e0e0"/>
+
+  <!-- ① ページ方式 -->
+  <text x="65" y="212" font-size="24" font-weight="700" fill="#222222">① ページ方式</text>
+
+  <g font-size="18" text-anchor="middle" stroke-width="1.5">
+    <rect x="65" y="270" width="52" height="60" fill="#e3f2fd" stroke="#1565c0"/>
+    <rect x="117" y="270" width="52" height="60" fill="#e3f2fd" stroke="#1565c0"/>
+    <rect x="169" y="270" width="52" height="60" fill="#e3f2fd" stroke="#1565c0"/>
+    <rect x="221" y="270" width="52" height="60" fill="#e3f2fd" stroke="#1565c0"/>
+    <rect x="273" y="270" width="52" height="60" fill="#e3f2fd" stroke="#1565c0"/>
+    <rect x="377" y="270" width="52" height="60" fill="#e3f2fd" stroke="#1565c0"/>
+    <rect x="429" y="270" width="52" height="60" fill="#e3f2fd" stroke="#1565c0"/>
+    <rect x="325" y="270" width="52" height="60" fill="#ffe0b2" stroke="#ef6c00" stroke-width="2.5"/>
+    <g fill="#0d47a1">
+      <text x="91" y="307">0</text>
+      <text x="143" y="307">1</text>
+      <text x="195" y="307">2</text>
+      <text x="247" y="307">3</text>
+      <text x="299" y="307">4</text>
+      <text x="351" y="307" fill="#e65100" font-weight="700">5</text>
+      <text x="403" y="307">6</text>
+      <text x="455" y="307">7</text>
+    </g>
+  </g>
+  <text x="65" y="254" font-size="16" fill="#555555">固定サイズのページの並び</text>
+  <text x="65" y="362" font-size="18" font-weight="700" fill="#e65100">変更のあったページを、その場で書き換える</text>
+
+  <g font-size="15" font-weight="700" fill="#757575">
+    <text x="65" y="420">ファイルに置くもの</text>
+    <text x="65" y="484">1件の変更で書く量</text>
+    <text x="65" y="548">経路圧縮の影響</text>
+    <text x="65" y="612">一部だけ読む</text>
+    <text x="65" y="676">起動時</text>
+    <text x="65" y="740">定期的な作業</text>
+  </g>
+  <g font-size="19" fill="#222222">
+    <text x="65" y="447">parentなど、答えるための構造</text>
+    <text x="65" y="511">ページ1枚（例: 8KB）</text>
+    <text x="65" y="575">書き換わったページを書き戻す</text>
+    <text x="65" y="639">できる</text>
+    <text x="65" y="703">必要なページを読むだけ</text>
+    <text x="65" y="767">特になし</text>
+  </g>
+
+  <!-- ② 追記ログ方式 -->
+  <text x="565" y="212" font-size="24" font-weight="700" fill="#222222">② 追記ログ方式</text>
+
+  <text x="565" y="254" font-size="16" fill="#555555">本体（ある時点の全データ）</text>
+  <text x="815" y="254" font-size="16" fill="#555555">追記ログ（それ以降の変更）</text>
+  <g text-anchor="middle" stroke-width="1.5">
+    <rect x="565" y="270" width="250" height="60" fill="#1565c0" stroke="#0d47a1" stroke-width="2"/>
+    <text x="690" y="307" font-size="18" font-weight="700" fill="#ffffff">キーの表 + 辺の一覧</text>
+    <rect x="815" y="270" width="48" height="60" fill="#e3f2fd" stroke="#1565c0"/>
+    <rect x="863" y="270" width="48" height="60" fill="#e3f2fd" stroke="#1565c0"/>
+    <rect x="911" y="270" width="48" height="60" fill="#e3f2fd" stroke="#1565c0"/>
+    <rect x="959" y="270" width="48" height="60" fill="#e3f2fd" stroke="#1565c0"/>
+    <rect x="1007" y="270" width="48" height="60" fill="#ffe0b2" stroke="#ef6c00" stroke-width="2.5"/>
+    <text x="1031" y="307" font-size="18" font-weight="700" fill="#e65100">＋</text>
+  </g>
+  <text x="565" y="362" font-size="18" font-weight="700" fill="#e65100">変更の記録を、末尾に足す</text>
+
+  <g font-size="15" font-weight="700" fill="#757575">
+    <text x="565" y="420">ファイルに置くもの</text>
+    <text x="565" y="484">1件の変更で書く量</text>
+    <text x="565" y="548">経路圧縮の影響</text>
+    <text x="565" y="612">一部だけ読む</text>
+    <text x="565" y="676">起動時</text>
+    <text x="565" y="740">定期的な作業</text>
+  </g>
+  <g font-size="19" fill="#222222">
+    <text x="565" y="447">元の情報だけ（キーの一覧と辺の一覧）</text>
+    <text x="565" y="511">数バイト（MERGEなら約9バイト）</text>
+    <text x="565" y="575">なし（parentをファイルに置かない）</text>
+    <text x="565" y="639">できない。起動時に全部読む</text>
+    <text x="565" y="703">追記ログを適用し、parentを作り直す</text>
+    <text x="565" y="767">本体の作り直し（ファイル全体を書く）</text>
+  </g>
+
+  <!-- ③ ufodbに合うのは追記ログ方式 -->
+  <text x="1125" y="212" font-size="24" font-weight="700" fill="#222222">③ ufodbに合うのは追記ログ方式</text>
+
+  <rect x="1120" y="240" width="420" height="195" rx="6" fill="#e3f2fd" stroke="#1565c0" stroke-width="2"/>
+  <text x="1140" y="278" font-size="20" font-weight="700" fill="#0d47a1">操作のほとんどが、足すだけ</text>
+  <g font-size="19" fill="#222222">
+    <text x="1140" y="322">・INSERT：キーが1つ増える</text>
+    <text x="1140" y="360">・MERGE：辺が1つ増える</text>
+    <text x="1140" y="398">・UNMERGE：「辺を消した」と足す</text>
+  </g>
+
+  <rect x="1120" y="460" width="420" height="195" rx="6" fill="#ffffff" stroke="#9e9e9e" stroke-width="1.5"/>
+  <text x="1140" y="498" font-size="20" font-weight="700" fill="#424242">ページ方式が合わない理由</text>
+  <g font-size="19" fill="#222222">
+    <text x="1140" y="542">・findの読む場所に規則性がない</text>
+    <text x="1140" y="580">・SAMEでも書き込みが起きる</text>
+    <text x="1140" y="618">・全体がメモリに載る</text>
+  </g>
+
+  <g font-size="19" font-weight="700" fill="#1565c0">
+    <text x="1120" y="712">ページ方式が要るのは、</text>
+    <text x="1120" y="744">全体がメモリに載らなくなったとき</text>
+  </g>
+  <text x="1120" y="806" font-size="17" fill="#555555">RDBMSはキーの順で探すので、ページ方式が合う</text>
+
+  <text x="1560" y="880" font-size="15" text-anchor="end" fill="#9e9e9e">ufodb_v0 設計資料</text>
+</svg>

@@ -1,0 +1,120 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" font-family="'Yu Gothic UI', 'Meiryo', 'Hiragino Sans', sans-serif">
+  <rect width="1600" height="900" fill="#ffffff"/>
+
+  <!-- ヘッダー -->
+  <text x="40" y="78" font-size="44" font-weight="700" fill="#1565c0">フォーマットを決める3つの問い</text>
+  <text x="40" y="128" font-size="22" fill="#333333">フォーマットは「ファイルに何を、どの順で書くか」。3つの問いに答えると決まる。</text>
+
+  <!-- パネル -->
+  <rect x="40" y="165" width="480" height="680" rx="10" fill="#fafafa" stroke="#e0e0e0"/>
+  <rect x="540" y="165" width="540" height="680" rx="10" fill="#fafafa" stroke="#e0e0e0"/>
+  <rect x="1100" y="165" width="460" height="680" rx="10" fill="#fafafa" stroke="#e0e0e0"/>
+
+  <!-- ① フォーマットで決めること -->
+  <text x="65" y="212" font-size="24" font-weight="700" fill="#222222">① フォーマットで決めること</text>
+
+  <rect x="60" y="240" width="440" height="225" rx="6" fill="#e3f2fd" stroke="#1565c0" stroke-width="2"/>
+  <text x="80" y="278" font-size="20" font-weight="700" fill="#0d47a1">決めるのはこれだけ</text>
+  <text x="80" y="318" font-size="20" fill="#222222">ファイルに何を、どの順で書くか</text>
+  <g font-size="14" text-anchor="middle" stroke-width="1.5">
+    <rect x="80" y="350" width="70" height="50" fill="#ffffff" stroke="#1565c0"/>
+    <rect x="150" y="350" width="120" height="50" fill="#ffffff" stroke="#1565c0"/>
+    <rect x="270" y="350" width="110" height="50" fill="#ffffff" stroke="#1565c0"/>
+    <rect x="380" y="350" width="33" height="50" fill="#ffffff" stroke="#1565c0"/>
+    <rect x="413" y="350" width="33" height="50" fill="#ffffff" stroke="#1565c0"/>
+    <rect x="446" y="350" width="33" height="50" fill="#ffffff" stroke="#1565c0"/>
+    <text x="115" y="380" fill="#0d47a1">ヘッダー</text>
+    <text x="210" y="380" fill="#0d47a1">キーの一覧</text>
+    <text x="325" y="380" fill="#0d47a1">辺の一覧</text>
+    <text x="396" y="380" fill="#0d47a1">＋</text>
+    <text x="429" y="380" fill="#0d47a1">＋</text>
+    <text x="462" y="380" fill="#0d47a1">＋</text>
+  </g>
+  <text x="80" y="436" font-size="15" fill="#555555">例：追記ログ方式のファイル</text>
+
+  <rect x="60" y="490" width="440" height="270" rx="6" fill="#ffffff" stroke="#9e9e9e" stroke-width="1.5"/>
+  <text x="80" y="528" font-size="20" font-weight="700" fill="#424242">フォーマットとは別に決めること</text>
+  <g font-size="18" fill="#222222">
+    <text x="80" y="568">・いつディスクに書き出すか（fsync）</text>
+    <text x="80" y="602">・HDDかSSDか</text>
+    <text x="80" y="636">・TCPとロック</text>
+  </g>
+  <g font-size="16" fill="#555555">
+    <text x="80" y="688">日記で言うと、何をどう書くかがフォーマット、</text>
+    <text x="80" y="716">いつ金庫にしまうかが fsync</text>
+  </g>
+
+  <text x="65" y="806" font-size="17" fill="#555555">別に決めることは、どのフォーマットでも選べる</text>
+
+  <!-- ② 3つの問い -->
+  <text x="565" y="212" font-size="24" font-weight="700" fill="#222222">② 3つの問いと、ufodbの答え</text>
+
+  <!-- 問1 -->
+  <rect x="560" y="240" width="500" height="180" rx="6" fill="#ffffff" stroke="#1565c0" stroke-width="2"/>
+  <text x="580" y="282" font-size="22" font-weight="700" fill="#1565c0">問1</text>
+  <text x="640" y="282" font-size="22" font-weight="700" fill="#222222">全体がメモリに載るか？</text>
+  <text x="580" y="327" font-size="16" fill="#757575">ufodbの答え</text>
+  <text x="700" y="327" font-size="20" font-weight="700" fill="#0d47a1">載る</text>
+  <text x="580" y="377" font-size="16" fill="#757575">決まること</text>
+  <text x="700" y="377" font-size="19" font-weight="700" fill="#222222">起動時に全部読む。ページは要らない</text>
+
+  <!-- 問2 -->
+  <rect x="560" y="440" width="500" height="180" rx="6" fill="#ffffff" stroke="#1565c0" stroke-width="2"/>
+  <text x="580" y="482" font-size="22" font-weight="700" fill="#1565c0">問2</text>
+  <text x="640" y="482" font-size="22" font-weight="700" fill="#222222">何が元のデータか？</text>
+  <text x="580" y="527" font-size="16" fill="#757575">ufodbの答え</text>
+  <text x="700" y="527" font-size="20" font-weight="700" fill="#0d47a1">キーの一覧と辺の一覧</text>
+  <text x="580" y="577" font-size="16" fill="#757575">決まること</text>
+  <text x="700" y="577" font-size="19" font-weight="700" fill="#222222">parentは置かない（作り直せる）</text>
+
+  <!-- 問3 -->
+  <rect x="560" y="640" width="500" height="180" rx="6" fill="#ffffff" stroke="#1565c0" stroke-width="2"/>
+  <text x="580" y="682" font-size="22" font-weight="700" fill="#1565c0">問3</text>
+  <text x="640" y="682" font-size="22" font-weight="700" fill="#222222">どんな変更が多いか？</text>
+  <text x="580" y="727" font-size="16" fill="#757575">ufodbの答え</text>
+  <text x="700" y="727" font-size="20" font-weight="700" fill="#0d47a1">足すだけ（INSERT・MERGE）</text>
+  <text x="580" y="777" font-size="16" fill="#757575">決まること</text>
+  <text x="700" y="777" font-size="19" font-weight="700" fill="#222222">変更は末尾に足す（追記ログ）</text>
+
+  <!-- ③ ufodbのフォーマット -->
+  <text x="1125" y="212" font-size="24" font-weight="700" fill="#222222">③ 答えから決まる形</text>
+
+  <g font-size="14" text-anchor="middle" fill="#555555">
+    <text x="1270" y="258">本体</text>
+    <text x="1480" y="258">追記ログ</text>
+  </g>
+  <g font-size="14" text-anchor="middle" stroke-width="1.5">
+    <rect x="1120" y="270" width="70" height="60" fill="#e3f2fd" stroke="#1565c0"/>
+    <rect x="1190" y="270" width="120" height="60" fill="#e3f2fd" stroke="#1565c0"/>
+    <rect x="1310" y="270" width="110" height="60" fill="#e3f2fd" stroke="#1565c0"/>
+    <rect x="1420" y="270" width="40" height="60" fill="#e3f2fd" stroke="#1565c0"/>
+    <rect x="1460" y="270" width="40" height="60" fill="#e3f2fd" stroke="#1565c0"/>
+    <rect x="1500" y="270" width="40" height="60" fill="#e3f2fd" stroke="#1565c0"/>
+    <text x="1155" y="305" fill="#0d47a1">ヘッダー</text>
+    <text x="1250" y="305" fill="#0d47a1">キーの一覧</text>
+    <text x="1365" y="305" fill="#0d47a1">辺の一覧</text>
+    <text x="1440" y="305" fill="#0d47a1">＋</text>
+    <text x="1480" y="305" fill="#0d47a1">＋</text>
+    <text x="1520" y="305" fill="#0d47a1">＋</text>
+  </g>
+
+  <g font-size="17" fill="#222222">
+    <text x="1120" y="392"><tspan font-weight="700" fill="#1565c0">問1</tspan>　全部読むので、ページに分けない</text>
+    <text x="1120" y="442"><tspan font-weight="700" fill="#1565c0">問2</tspan>　置くのはキーの一覧と辺の一覧だけ</text>
+    <text x="1120" y="492"><tspan font-weight="700" fill="#1565c0">問3</tspan>　変更は追記ログに足す</text>
+  </g>
+
+  <rect x="1120" y="550" width="420" height="150" rx="6" fill="#ffffff" stroke="#9e9e9e" stroke-width="1.5"/>
+  <text x="1140" y="588" font-size="19" font-weight="700" fill="#424242">そのあとで決める細部</text>
+  <g font-size="17" fill="#222222">
+    <text x="1140" y="628">・整数の幅（例：4バイト）</text>
+    <text x="1140" y="664">・キーは可変長か、固定長か</text>
+  </g>
+
+  <g font-size="17" font-weight="700" fill="#1565c0">
+    <text x="1120" y="764">問いの答えが変われば、形も変わる</text>
+  </g>
+  <text x="1120" y="798" font-size="16" fill="#555555">例：メモリに載らなくなったら、ページ方式へ</text>
+
+  <text x="1560" y="880" font-size="15" text-anchor="end" fill="#9e9e9e">ufodb_v0 設計資料</text>
+</svg>
