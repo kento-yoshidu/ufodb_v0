@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" font-family="'Yu Gothic UI', 'Meiryo', 'Hiragino Sans', sans-serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#555555"/>
+    </marker>
+  </defs>
+
+  <rect width="1600" height="900" fill="#ffffff"/>
+
+  <!-- ヘッダー -->
+  <text x="40" y="78" font-size="44" font-weight="700" fill="#1565c0">uf の利点：「同じグループか」が速い</text>
+  <text x="40" y="128" font-size="22" fill="#333333">graph だけでも SAME は答えられるが、毎回辺をたどる。uf は根を比べるだけで済む。</text>
+
+  <!-- パネル -->
+  <rect x="40" y="165" width="480" height="680" rx="10" fill="#fafafa" stroke="#e0e0e0"/>
+  <rect x="540" y="165" width="540" height="680" rx="10" fill="#fafafa" stroke="#e0e0e0"/>
+  <rect x="1100" y="165" width="460" height="680" rx="10" fill="#fafafa" stroke="#e0e0e0"/>
+
+  <!-- ① graph だけで SAME -->
+  <text x="65" y="212" font-size="24" font-weight="700" fill="#222222">① graph だけで SAME すると</text>
+  <text x="65" y="250" font-size="17" fill="#555555">SAME apple cherry</text>
+
+  <rect x="65" y="270" width="430" height="300" rx="6" fill="#ffebee" stroke="#c62828" stroke-width="2"/>
+  <text x="85" y="305" font-size="20" font-weight="700" fill="#c62828">apple から辺をたどって探す</text>
+  <g stroke="#555555" stroke-width="2" marker-end="url(#arrow)">
+    <line x1="197" y1="352" x2="221" y2="352"/>
+    <line x1="337" y1="352" x2="361" y2="352"/>
+  </g>
+  <g text-anchor="middle" font-size="18">
+    <rect x="85" y="332" width="110" height="40" rx="20" fill="#ffffff" stroke="#1565c0" stroke-width="2"/>
+    <text x="140" y="358" fill="#0d47a1">apple</text>
+    <rect x="225" y="332" width="110" height="40" rx="20" fill="#ffffff" stroke="#1565c0" stroke-width="2"/>
+    <text x="280" y="358" fill="#0d47a1">banana</text>
+    <rect x="365" y="332" width="110" height="40" rx="20" fill="#fff3e0" stroke="#ef6c00" stroke-width="2"/>
+    <text x="420" y="358" fill="#e65100" font-weight="700">cherry</text>
+  </g>
+  <text x="85" y="410" font-size="18" fill="#222222">3個見て、やっと cherry に着く</text>
+  <text x="85" y="470" font-size="18" fill="#222222">10万件が1つのグループなら</text>
+  <text x="85" y="502" font-size="18" fill="#222222">→ 1回の SAME で最悪10万個見る</text>
+  <text x="85" y="548" font-size="19" font-weight="700" fill="#c62828">グループの大きさに比例して遅い</text>
+
+  <text x="65" y="620" font-size="20" fill="#222222">・SIZE も全員を数えることになる</text>
+  <text x="65" y="660" font-size="20" fill="#222222">・MERGE の「もう同じ？」判定も同じ</text>
+
+  <!-- ② uf なら -->
+  <text x="565" y="212" font-size="24" font-weight="700" fill="#222222">② uf なら根を比べるだけ</text>
+  <text x="580" y="250" font-size="17" fill="#555555">keys: apple → 0　cherry → 2</text>
+
+  <rect x="560" y="270" width="500" height="300" rx="6" fill="#e8f5e9" stroke="#2e7d32" stroke-width="2"/>
+  <g stroke="#555555" stroke-width="2" marker-end="url(#arrow)">
+    <line x1="695" y1="430" x2="770" y2="372"/>
+    <line x1="925" y1="430" x2="850" y2="372"/>
+  </g>
+  <g text-anchor="middle" font-size="18">
+    <rect x="755" y="325" width="110" height="40" rx="20" fill="#1565c0" stroke="#0d47a1" stroke-width="2"/>
+    <text x="810" y="351" fill="#ffffff" font-weight="700">apple</text>
+    <rect x="625" y="435" width="110" height="40" rx="20" fill="#ffffff" stroke="#1565c0" stroke-width="2"/>
+    <text x="680" y="461" fill="#0d47a1">banana</text>
+    <rect x="885" y="435" width="110" height="40" rx="20" fill="#fff3e0" stroke="#ef6c00" stroke-width="2"/>
+    <text x="940" y="461" fill="#e65100" font-weight="700">cherry</text>
+  </g>
+  <text x="580" y="305" font-size="20" font-weight="700" fill="#2e7d32">find(0) = 0　find(2) = 0 → true</text>
+  <text x="580" y="515" font-size="18" fill="#222222">parent を根まで上るだけ（経路圧縮で1〜2歩）</text>
+  <text x="580" y="548" font-size="19" font-weight="700" fill="#2e7d32">グループが10万件でもほぼ定数 O(α(n))</text>
+
+  <g font-size="20" fill="#222222">
+    <text x="565" y="620">・SIZE は size[根] を読むだけ</text>
+    <text x="565" y="660">・MERGE も根が違うかを見て、つなぐだけ</text>
+  </g>
+
+  <!-- ③ ufodbでの役割分担 -->
+  <text x="1125" y="212" font-size="24" font-weight="700" fill="#222222">③ ufodb での役割分担</text>
+
+  <rect x="1120" y="240" width="420" height="200" rx="6" fill="#e3f2fd" stroke="#1565c0" stroke-width="2"/>
+  <text x="1140" y="276" font-size="20" font-weight="700" fill="#0d47a1">uf ＝ 計算する係（主役）</text>
+  <text x="1140" y="318" font-size="18" fill="#222222">INSERT / MERGE / SAME</text>
+  <text x="1140" y="350" font-size="18" fill="#222222">SIZE / GROUPS</text>
+  <text x="1140" y="410" font-size="19" font-weight="700" fill="#1565c0">→ 日常の操作は全部 uf が答える</text>
+
+  <rect x="1120" y="460" width="420" height="200" rx="6" fill="#ffffff" stroke="#9e9e9e" stroke-width="1.5"/>
+  <text x="1140" y="496" font-size="20" font-weight="700" fill="#424242">graph ＝ 記録する係</text>
+  <text x="1140" y="538" font-size="18" fill="#222222">UNMERGE（どの辺を外すか）</text>
+  <text x="1140" y="570" font-size="18" fill="#222222">SNAPSHOT（辺を描く）</text>
+  <text x="1140" y="630" font-size="19" font-weight="700" fill="#1565c0">→ uf を作り直すときの材料</text>
+
+  <rect x="1120" y="680" width="420" height="120" rx="6" fill="#fff3e0" stroke="#ef6c00" stroke-width="2"/>
+  <text x="1140" y="716" font-size="18" fill="#222222">削除と可視化がなければ graph は不要</text>
+  <text x="1140" y="770" font-size="19" font-weight="700" fill="#1565c0">→ 古典的な Union-Find は uf だけ</text>
+
+  <text x="1560" y="880" font-size="15" text-anchor="end" fill="#9e9e9e">ufodb_v0 設計資料</text>
+</svg>
