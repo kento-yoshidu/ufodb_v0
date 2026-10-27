@@ -22,12 +22,13 @@ struct StartupArgs {
 enum Commands {
     Hello,
     Insert { key: String },
-    Same { key_a: String, key_b: String },
     Merge { key_a: String, key_b: String },
+    Delete { key: String },
+    Unmerge { key_a: String, key_b: String },
+    Same { key_a: String, key_b: String },
     Size { key: String },
     Groups,
     Createdb { db_name: String },
-    Unmerge { key_a: String, key_b: String },
     Save,
     Load { db_name: String },
     Snapshot,
@@ -80,6 +81,9 @@ fn main() {
                     Commands::Merge { key_a, key_b } => {
                         let res = db.get_mut(&db_name).unwrap().unite(&key_a, &key_b);
                         println!("{res}");
+                    },
+                    Commands::Delete { key } => {
+                        println!("DELETE");
                     },
                     Commands::Same { key_a, key_b } => {
                         let res = db.get_mut(&db_name).unwrap().same(&key_a, &key_b);

@@ -1,0 +1,99 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" font-family="'Yu Gothic UI', 'Meiryo', 'Hiragino Sans', sans-serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#555555"/>
+    </marker>
+  </defs>
+
+  <rect width="1600" height="900" fill="#ffffff"/>
+
+  <!-- ヘッダー -->
+  <text x="40" y="78" font-size="44" font-weight="700" fill="#1565c0">uf は graph から作り直せる</text>
+  <text x="40" y="128" font-size="22" fill="#333333">graph の辺を unite し直せば uf はできるが、uf の parent からは辺を取り出せない。</text>
+
+  <!-- パネル -->
+  <rect x="40" y="165" width="480" height="680" rx="10" fill="#fafafa" stroke="#e0e0e0"/>
+  <rect x="540" y="165" width="540" height="680" rx="10" fill="#fafafa" stroke="#e0e0e0"/>
+  <rect x="1100" y="165" width="460" height="680" rx="10" fill="#fafafa" stroke="#e0e0e0"/>
+
+  <!-- ① 同じつながりの2つの姿 -->
+  <text x="65" y="212" font-size="24" font-weight="700" fill="#222222">① 同じつながりの2つの姿</text>
+  <text x="65" y="250" font-size="17" fill="#555555">例: MERGE apple banana / MERGE banana cherry</text>
+
+  <!-- graph -->
+  <rect x="65" y="270" width="430" height="160" rx="6" fill="#e3f2fd" stroke="#1565c0" stroke-width="2"/>
+  <text x="85" y="305" font-size="22" font-weight="700" fill="#0d47a1">graph（記録）</text>
+  <line x1="195" y1="352" x2="225" y2="352" stroke="#555555" stroke-width="3"/>
+  <line x1="335" y1="352" x2="365" y2="352" stroke="#ef6c00" stroke-width="5"/>
+  <g text-anchor="middle" font-size="18">
+    <rect x="85" y="332" width="110" height="40" rx="20" fill="#ffffff" stroke="#1565c0" stroke-width="2"/>
+    <text x="140" y="358" fill="#0d47a1">apple</text>
+    <rect x="225" y="332" width="110" height="40" rx="20" fill="#ffffff" stroke="#1565c0" stroke-width="2"/>
+    <text x="280" y="358" fill="#0d47a1">banana</text>
+    <rect x="365" y="332" width="110" height="40" rx="20" fill="#ffffff" stroke="#1565c0" stroke-width="2"/>
+    <text x="420" y="358" fill="#0d47a1">cherry</text>
+  </g>
+  <text x="85" y="408" font-size="16" fill="#333333">MERGE でつないだ <tspan fill="#e65100" font-weight="700">banana ― cherry</tspan> が残る</text>
+
+  <!-- uf -->
+  <rect x="65" y="450" width="430" height="310" rx="6" fill="#e3f2fd" stroke="#1565c0" stroke-width="2"/>
+  <text x="85" y="485" font-size="22" font-weight="700" fill="#0d47a1">uf（計算用）</text>
+  <text x="230" y="485" font-size="16" fill="#333333">parent = [0, 0, 0]</text>
+  <g stroke="#555555" stroke-width="2" marker-end="url(#arrow)">
+    <line x1="185" y1="628" x2="255" y2="578"/>
+    <line x1="375" y1="628" x2="305" y2="578"/>
+  </g>
+  <g text-anchor="middle" font-size="18">
+    <rect x="225" y="530" width="110" height="40" rx="20" fill="#1565c0" stroke="#0d47a1" stroke-width="2"/>
+    <text x="280" y="556" fill="#ffffff" font-weight="700">apple</text>
+    <rect x="115" y="632" width="110" height="40" rx="20" fill="#ffffff" stroke="#1565c0" stroke-width="2"/>
+    <text x="170" y="658" fill="#0d47a1">banana</text>
+    <rect x="335" y="632" width="110" height="40" rx="20" fill="#ffffff" stroke="#1565c0" stroke-width="2"/>
+    <text x="390" y="658" fill="#0d47a1">cherry</text>
+  </g>
+  <text x="85" y="712" font-size="16" fill="#333333">矢印は parent（根の apple を指す）</text>
+  <text x="85" y="740" font-size="16" fill="#e65100" font-weight="700">banana ― cherry の辺はどこにもない</text>
+
+  <text x="65" y="810" font-size="17" fill="#555555">uniteは「根の下」に付けるので、cherry は apple を直接指す</text>
+
+  <!-- ② 作り直せるのは片方向だけ -->
+  <text x="565" y="212" font-size="24" font-weight="700" fill="#222222">② 作り直せるのは片方向だけ</text>
+
+  <rect x="560" y="240" width="500" height="170" rx="6" fill="#e8f5e9" stroke="#2e7d32" stroke-width="2"/>
+  <text x="580" y="280" font-size="22" font-weight="700" fill="#2e7d32">graph → uf　できる</text>
+  <text x="580" y="322" font-size="18" fill="#222222">辺を1本ずつ unite し直せば、同じ uf になる</text>
+  <text x="580" y="380" font-size="19" font-weight="700" fill="#1565c0">→ unmerge が毎回やっていること</text>
+
+  <rect x="560" y="430" width="500" height="170" rx="6" fill="#ffebee" stroke="#c62828" stroke-width="2"/>
+  <text x="580" y="470" font-size="22" font-weight="700" fill="#c62828">uf → graph　できない</text>
+  <text x="580" y="512" font-size="18" fill="#222222">parent からは、誰と誰をつないだか分からない</text>
+  <text x="580" y="570" font-size="19" font-weight="700" fill="#1565c0">→ 経路圧縮で形はさらに崩れる</text>
+
+  <g font-size="20" fill="#222222">
+    <text x="565" y="670">・uf を作り直すときの材料は graph</text>
+    <text x="565" y="710">・graph が要るのは、どの辺かを知りたい操作だけ</text>
+    <text x="565" y="750">・計算そのものは uf がする</text>
+  </g>
+
+  <!-- ③ ufodbではどうなるか -->
+  <text x="1125" y="212" font-size="24" font-weight="700" fill="#222222">③ ufodb ではどうなるか</text>
+
+  <rect x="1120" y="240" width="420" height="160" rx="6" fill="#ffffff" stroke="#9e9e9e" stroke-width="1.5"/>
+  <text x="1140" y="276" font-size="20" font-weight="700" fill="#424242">UNMERGE <tspan fill="#e65100">banana cherry</tspan></text>
+  <text x="1140" y="316" font-size="18" fill="#222222">graph に辺があるので外せる</text>
+  <text x="1140" y="370" font-size="19" font-weight="700" fill="#1565c0">→ apple ― banana ／ cherry</text>
+
+  <rect x="1120" y="420" width="420" height="200" rx="6" fill="#fff3e0" stroke="#ef6c00" stroke-width="2"/>
+  <text x="1140" y="456" font-size="20" font-weight="700" fill="#e65100">MERGE apple cherry（もう同じ）</text>
+  <text x="1140" y="496" font-size="17" fill="#222222">unite が false → graph に辺を足さない</text>
+  <text x="1140" y="530" font-size="17" fill="#222222">あとで UNMERGE apple cherry しても</text>
+  <text x="1140" y="556" font-size="17" fill="#222222">何も起きない</text>
+  <text x="1140" y="598" font-size="19" font-weight="700" fill="#1565c0">→ graph は全履歴ではなく、森</text>
+
+  <rect x="1120" y="640" width="420" height="160" rx="6" fill="#ffffff" stroke="#9e9e9e" stroke-width="1.5"/>
+  <text x="1140" y="676" font-size="20" font-weight="700" fill="#424242">保存（SAVE）</text>
+  <text x="1140" y="716" font-size="18" fill="#222222">いまは keys・uf・graph を全部書く</text>
+  <text x="1140" y="770" font-size="19" font-weight="700" fill="#1565c0">→ uf は理屈の上では省ける</text>
+
+  <text x="1560" y="880" font-size="15" text-anchor="end" fill="#9e9e9e">ufodb_v0 設計資料</text>
+</svg>
